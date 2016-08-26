@@ -24,6 +24,7 @@ gulp.task('connect', ['styles', 'fonts'], function() {
 
     server.listen(app.get('port'), function () {
         console.log('✔ Express server listening connected listening on: ' + app.get('port'));
+        console.log('✔ Socket.io listening connected listening on: ' + app.get('port'));
     });
 });
 
@@ -40,5 +41,6 @@ gulp.task('connect:dist', ['build'], function() {
 
     server.listen(app.get('port'), function () {
         console.log('✔ Express server listening connected listening on: ' + app.get('port'));
+        console.log('✔ Socket.io listening connected listening on: ' + app.get('port'));
     });
 })

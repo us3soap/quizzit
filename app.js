@@ -15,4 +15,5 @@ sockets(io);
 
 server.listen(app.get('port'), function () {
     console.log('✔ Express server listening connected listening on: ' + app.get('port'));
+    console.log('✔ Socket.io listening connected listening on: ' + app.get('port'));
 });
