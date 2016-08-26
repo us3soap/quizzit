@@ -20,18 +20,10 @@ module.exports = function(router) {
     router.get('/access-room/:token', qrcodeController.getQRaccess);
     
     /** Admin page
-    *   @param token : identifiant de la salle à paramétrer.
-    *   @return url : url à intérargir pour les sockets
-    *   @return room : id de la room à administrer (la valeur est forcée à false si une erreur est remontée)
-    *   @return error : les erreurs à remonter en cas d'anomalie
     **/
     router.get('/admin/:token', adminController.getParam);
     
     /** User page
-    *   @param token : identifiant de la salle à rejoindre.
-    *   @return url : url à intérargir pour les sockets
-    *   @return room : id de la room à administrer (la valeur est forcée à false si une erreur est remontée)
-    *   @return error : les erreurs à remonter en cas d'anomalie
     **/
     router.get('/room/:token', userController.getRoom);
 };
