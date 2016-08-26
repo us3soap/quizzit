@@ -1,4 +1,4 @@
-module.exports = function(server) {
+module.exports = function(router) {
     
     var room = require('../models/room/index.js');
     var questionnaire = require("../models/questionnaire/index.js");
@@ -10,7 +10,7 @@ module.exports = function(server) {
     *   @return token : le token référençant la page a accédée.
     *   @return ready2play : l'indicateur permettant de conditionnant le QRcode [true=>la partie est administrée, false=> en attente de paramétrage]
     **/
-    server.get('/', function(req, res) {
+    router.get('/', function(req, res) {
     
         //Création d'une nouvelle room
         var token = room.newRoom();
@@ -28,7 +28,7 @@ module.exports = function(server) {
     *   @param token : identifiant de la salle à paramétrer.
     *   @return qrcode : image symbolisant une adresse de type /admin-room/idToken
     **/
-    server.get('/admin-room/:token', function(req, res) {
+    router.get('/admin-room/:token', function(req, res) {
       var myRoom = room.getRoom(req.params.token);
     
       if(myRoom != false) {
@@ -46,7 +46,7 @@ module.exports = function(server) {
     *   @param token : identifiant de la salle à rejoindre.
     *   @return qrcode : image symbolisant une adresse de type /access-room/idToken
     **/
-    server.get('/access-room/:token', function(req, res) {
+    router.get('/access-room/:token', function(req, res) {
         var myRoom = room.getRoom(req.params.token);
     
         if(myRoom != false) {

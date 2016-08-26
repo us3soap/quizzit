@@ -24,7 +24,7 @@ function Server() {
 
     // Returns middleware that parses cookies
     app.use(cookieParser());
-
+    
     routes(app);
 
     return app;
