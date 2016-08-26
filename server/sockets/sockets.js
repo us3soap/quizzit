@@ -4,7 +4,7 @@ module.exports = function(io) {
 
     io.on('connection', function (socket) {  
         // Socket de connexion d'un nouveau joueur.
-        io.on('user', function (data, fn) {
+        socket.on('user', function (data, fn) {
             console.log('Inscription de : ' + data["pseudo"] + ' dans la room ' + data["room"]);
             var userToken = room.getRoom(data["room"]).memberJoin();
             // Si le user est valide, on l'ajoute sur la page de la room.
