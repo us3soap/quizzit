@@ -1,12 +1,15 @@
 var gulp = require('gulp');
 var connectLiveReload = require('connect-livereload');
 var serveStatic = require('serve-static');
-var server = require('../../server/server')();
+var app = require('../../server/server')();
+var http = require('http');
+var sockets = require('../../server/sockets/sockets');
+
 
 gulp.task('connect', ['styles', 'fonts'], function() {
-    server.set('views', './app');
+    app.set('views', './app');
 
-    server.use(connectLiveReload())
+    app.use(connectLiveReload())
         .use(serveStatic('.tmp'))
         .use(serveStatic('app', {
             'index': ['index.html'],
@@ -14,20 +17,28 @@ gulp.task('connect', ['styles', 'fonts'], function() {
         // paths to bower_components should be relative to the current file
         // e.g. in app/index.html you should use ../bower_components
         .use('/bower_components', serveStatic('bower_components'));
+    
+    var server = http.createServer(app);
+    var io = require('socket.io').listen(server);
+    sockets(io);
 
-    server.listen(server.get('port'), function () {
-        console.log('✔ Express server listening connected listening on: ' + server.get('port'));
+    server.listen(app.get('port'), function () {
+        console.log('✔ Express server listening connected listening on: ' + app.get('port'));
     });
 });
 
 gulp.task('connect:dist', ['build'], function() {
-    server.set('views', './dist');
+    app.set('views', './dist');
 
-    server.use(serveStatic('dist', {
+    app.use(serveStatic('dist', {
         'index': ['index.html']
     }));
+    
+    var server = http.createServer(app);
+    var io = require('socket.io').listen(server);
+    sockets(io);
 
-    server.listen(server.get('port'), function () {
-        console.log('✔ Express server listening connected listening on: ' + server.get('port'));
+    server.listen(app.get('port'), function () {
+        console.log('✔ Express server listening connected listening on: ' + app.get('port'));
     });
 })
