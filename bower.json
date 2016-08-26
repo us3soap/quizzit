@@ -1,0 +1,8 @@
+{
+  "name": "workspace",
+  "private": true,
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "font-awesome": "~4.4.0"
+  }
+}
