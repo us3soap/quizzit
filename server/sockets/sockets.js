@@ -2,6 +2,7 @@ module.exports = function(io) {
     
     var room = require('../models/room/index.js');
     var questionnaire = require('../models/questionnaire/index.js');
+    var questions = require('../../resources/questions.json');
     var dashboardHandler = require('./EventHandlers/dashboard');
     
     io.on('connection', function (socket) {
