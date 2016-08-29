@@ -54,7 +54,7 @@
             };
             
             var socket = io.connect(GLOBAL.url);
-            socket.emit('user', {  pseudo: 'test', room: GLOBAL.token  });
+            socket.emit('user', {  pseudo: 'test', room: GLOBAL.token  }, function (data) {});
         </script>
     </body>
 </html>
