@@ -1,62 +1,63 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-    <title>QuizzJS</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/jquery-ui.css">
-    <link rel="stylesheet" href="/css/telephone.css">
-        
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+	<title>QuizzJS</title>
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/jquery-ui.css">
+	<link rel="stylesheet" href="/styles/admin.css">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
 </head>
 
 <body>
-    <div class="content">
-    	<nav class="navbar navbar-default">
-    	  <div class="container-fluid">
-    	    <div class="navbar-header">
-    	      <a class="navbar-brand" href="#">
-    	        <p> Paramétrage de votre partie </p>
-    	      </a>
-    	    </div>
-    	  </div>
-    	</nav>
-    	
-    	<h4>Nombre d'utilisateurs</h4>
-    	
-    	<select id="nbUsersMax" class="form-control">
-    	  <option>1</option>
-    	  <option>2</option>
-    	  <option>3</option>
-    	  <option>4</option>
-    	</select>
-    	
-    	<h4>Nombre de questions</h4>
-    	
-    	<select id="nbQuestions" class="form-control">
-    	  <option>5</option>
-    	  <option>10</option>
-    	  <option>15</option>
-    	  <option>20</option>
-    	</select>
-    	
-    	<h4>Temps de réponse autorisé</h4>
-    	
-    	<select id="timerQuestion" class="form-control">
-    	  <option>15</option>
-    	  <option>30</option>
-    	  <option>45</option>
-    	  <option>60</option>
-    	</select>
-    	
-    	<div class="panel panel-default" style="margin-top:30px;">
-      		<div class="panel-body" style="text-align: center;">
-    			<button id="createRoom" type="button" class="btn btn-primary">Créer le salon</button>
-      		</div>
-    	</div>
-    	
-    </div>
+	<div id="content" class="content">
+		<nav class="navbar navbar-default">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="#">
+		        <p> {{ nomPage }} </p>
+		      </a>
+		    </div>
+		  </div>
+		</nav>
+		
+		<h4>Nombre d'utilisateurs</h4>
+		
+		<select id="nbUsersMax" class="form-control">
+			<option v-for="nbUsers in nbUsersMax">
+		  		{{ nbUsers.text }}
+		  	</option>
+		</select>
+		
+		<h4>Nombre de questions</h4>
+		
+		<select id="nbQuestions" class="form-control">
+			<option v-for="nbQuestions in nbQuestionsMax">
+		  		{{ nbQuestions.text }}
+		  	</option>
+		</select>
+		
+		<h4>Temps de réponse autorisé</h4>
+		
+		<select id="timerQuestion" class="form-control">
+			<option v-for="timerQuestion in timerQuestionMax">
+		  		{{ timerQuestion.text }}
+		  	</option>
+		</select>
+		
+		<div class="panel panel-default" style="margin-top:30px;">
+  			<div class="panel-body" style="text-align: center;">
+    			<button id="createRoom" type="button" class="btn btn-primary" v-on:click="createRoom">Créer le salon</button>
+  			</div>
+		</div>
+	
+	</div>
+    <script src="/bower_components/vue/dist/vue.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/js/notify.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/admin.js"></script>
     
     <script>
         var GLOBAL = {
@@ -65,5 +66,5 @@
             error : '<%= error %>'
         };
     </script>
-    </body>
+</body>
 </html>
