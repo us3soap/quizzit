@@ -3,8 +3,7 @@ module.exports = function(io) {
     var room = require('../models/room/index.js');
     var questionnaire = require('../models/questionnaire/index.js');
     var questions = require('../../resources/questions.json');
-    var dashboardHandler = require('./EventHandlers/dashboard');
-    
+
     io.on('connection', function (socket) {
     
         // Socket de connexion d'un nouveau joueur.
@@ -44,12 +43,8 @@ module.exports = function(io) {
                 room.getRoom(data["room"]).setTimerQuestion(data["timerQuestion"]);
                 
                 //--Load questions si l'utilisateur en a saisi
-                if (data["nbNouvellesQuestions"] > 0) {
-                    room.getRoom(data["room"]).setNbQuestions(data["nbQuestions"]);
-                    questionnaire.loadQuestionnaire(JSON.parse(data["nouvellesQuestions"]), data["room"]);
-                } else {
-                    questionnaire.loadQuestionnaire(questions, data["room"]);
-                }
+                questionnaire.loadQuestionnaire(questions, data["room"]);
+                
                 socket.to('/'+data["room"]).emit('create-room-'+data["room"], {nbUsersMax : data["nbUsersMax"],
                                                                         nbQuestions : data["nbQuestions"],
                                                                         timerQuestion : data["timerQuestion"]});
