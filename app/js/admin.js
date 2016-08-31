@@ -55,7 +55,7 @@ $(function() {
                 if (messageErreur != "") {
                     $.notify(messageErreur);
                 }else{
-                    var parametres = {'room': GLOBAL.token, 'nbUsersMax': nbUserSaisi, 'nbQuestions' : nbQuestionsSaisi, 'timerQuestion' : timerQuestion, 'nbNouvellesQuestions' : cptQuestion.toString(), 'nouvellesQuestions' : ''};
+                    var parametres = {'room': GLOBAL.token, 'nbUsersMax': nbUserSaisi, 'nbQuestions' : nbQuestionsSaisi, 'timerQuestion' : timerQuestion};
                     socket.emit('param-room', parametres , function (data) {
                         if (data["url"] != null){
                             document.location=data["url"];
