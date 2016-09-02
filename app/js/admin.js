@@ -2,7 +2,6 @@ $(function() {
 
     var cptQuestion = 0;
     var socket = io.connect(GLOBAL.url);
-    
     new Vue({
         el: '#content',
         data: {
@@ -57,11 +56,32 @@ $(function() {
                 }else{
                     var parametres = {'room': GLOBAL.token, 'nbUsersMax': nbUserSaisi, 'nbQuestions' : nbQuestionsSaisi, 'timerQuestion' : timerQuestion};
                     socket.emit('param-room', parametres , function (data) {
+                        alert("après socket.emit");
                         if (data["url"] != null){
                             document.location=data["url"];
                         }
                     });
                 }
+            },
+            afficherDiv : function(div) {
+
+                $("#listeTemps").hide();
+                $("#listeQuestions").hide();
+                $("#listeUsers").hide();
+               
+                $("#" + div).show();
+               
+                $(".avant").addClass("afficherVerso");
+                $(".arriere").addClass("afficherRecto");
+            },
+            retourEcran : function() {
+                var msg = parseInt($("#nbUsersMax").val()) > 1 ? "utilisateurs" : "utilisateur";
+                $("#users").html($("#nbUsersMax").val() + " </br>" + msg);
+                $("#questions").html($("#nbQuestions").val() + " </br>questions");
+                $("#temps").html($("#timerQuestion").val() + " </br>secondes");
+                
+                $(".arriere").attr("class","arriere");
+                $(".avant").attr("class","avant");
             }
         }
     })

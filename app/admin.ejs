@@ -5,6 +5,7 @@
 	<link rel="stylesheet" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/css/jquery-ui.css">
 	<link rel="stylesheet" href="/styles/admin.css">
+	<link href="https://fonts.googleapis.com/css?family=Sigmar+One" rel="stylesheet"> 
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
@@ -12,47 +13,70 @@
 
 <body>
 	<div id="content" class="content">
-		<nav class="navbar navbar-default">
-		  <div class="container-fluid">
-		    <div class="navbar-header">
-		      <a class="navbar-brand">
-		        <p> {{ nomPage }} </p>
-		      </a>
-		    </div>
-		  </div>
-		</nav>
 		
-		<h4>Nombre d'utilisateurs</h4>
-		
-		<select id="nbUsersMax" class="form-control">
-			<option v-for="nbUsers in nbUsersMax">
-		  		{{ nbUsers.text }}
-		  	</option>
-		</select>
-		
-		<h4>Nombre de questions</h4>
-		
-		<select id="nbQuestions" class="form-control">
-			<option v-for="nbQuestions in nbQuestionsMax">
-		  		{{ nbQuestions.text }}
-		  	</option>
-		</select>
-		
-		<h4>Temps de réponse autorisé</h4>
-		
-		<select id="timerQuestion" class="form-control">
-			<option v-for="timerQuestion in timerQuestionMax">
-		  		{{ timerQuestion.text }}
-		  	</option>
-		</select>
-		
-		<div class="panel panel-default" style="margin-top:30px;">
-  			<div class="panel-body" style="text-align: center;">
-    			<button id="createRoom" type="button" class="btn btn-primary" v-on:click="createRoom">Créer le salon</button>
-  			</div>
+		<div class="titrePage">
+			<p> {{ nomPage }} </p>
 		</div>
-	
+		
+		<div class="scene">
+			<div class="flip">
+				<div class="avant">
+					
+					<table>
+						<tr>
+							<td v-on:click="afficherDiv('listeUsers')">
+								<h4 id="users">1</br>utilisateur</h4>
+							</td>
+							<td v-on:click="afficherDiv('listeQuestions')">
+								<h4 id="questions">5</br>questions</h4>
+							</td>
+						</tr>
+						<tr>
+							<td v-on:click="afficherDiv('listeTemps')">
+								<h4 id="temps">15 </br>secondes</h4>
+							</td>
+						</tr>
+						
+					</table>
+					
+					<div style="margin-top:30px;">
+			    		<button id="createRoom" type="button" class="btn btn-primary" v-on:click="createRoom">C'est parti</button>
+					</div>
+				</div>
+				
+				<div class="arriere">
+					
+					<div id="listeUsers" class="cache">
+						<h4>Nombre d'utilisateurs</h4>
+						<span class="custom-dropdown custom-dropdown--emerald">
+						<select id="nbUsersMax" class="custom-dropdown__select custom-dropdown__select--emerald" v-on:change="retourEcran();">
+							<option v-for="nbUsers in nbUsersMax">
+						  		{{ nbUsers.text }}
+						  	</option>
+						</select>
+						</span>
+					</div>
+					<div id="listeQuestions" class="cache">
+						<h4>Nombre de questions</h4>
+						<select id="nbQuestions" class="form-control" v-on:change="retourEcran();">
+							<option v-for="nbQuestions in nbQuestionsMax">
+						  		{{ nbQuestions.text }}
+						  	</option>
+						</select>
+					</div>
+					<div id="listeTemps" class="cache">
+						<h4>Temps de réponse autorisé</h4>
+						<select id="timerQuestion" class="form-control" v-on:change="retourEcran();">
+							<option v-for="timerQuestion in timerQuestionMax">
+						  		{{ timerQuestion.text }}
+						  	</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
+	
     <script src="/bower_components/vue/dist/vue.js"></script>
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/bower_components/notify.min.js"></script>

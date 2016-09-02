@@ -34,6 +34,7 @@ $(function() {
                 this.pseudo = $("#pseudo").val();
                 socket.emit('user', { pseudo: this.pseudo, room: GLOBAL.token }, function (dataRetour) {
                     maVue.userToken = dataRetour['userToken'];
+                    alert(dataRetour['userToken']);
                     if (maVue.userToken != false) {
                         maVue.msgDebug = dataRetour['userToken'];
                         maVue.alreadyLogged = true;
