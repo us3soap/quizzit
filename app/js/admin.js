@@ -1,3 +1,6 @@
+/* global Vue*/
+/* global io*/
+/* global $*/
 $(function() {
 
     var cptQuestion = 0;
