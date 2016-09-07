@@ -22,15 +22,15 @@
 					<table>
 						<tr>
 							<td v-on:click="afficherDiv('listeUsers')">
-								<h4 id="users">1</br>utilisateur</h4>
+								<h4 id="users">{{ param.user }}</br>utilisateur</h4>
 							</td>
 							<td v-on:click="afficherDiv('listeQuestions')">
-								<h4 id="questions">5</br>questions</h4>
+								<h4 id="questions">{{ param.question }}</br>questions</h4>
 							</td>
 						</tr>
 						<tr>
 							<td v-on:click="afficherDiv('listeTemps')">
-								<h4 id="temps">15 </br>secondes</h4>
+								<h4 id="temps">{{ param.time }} </br>secondes</h4>
 							</td>
 						</tr>
 						
@@ -73,19 +73,21 @@
 			</div>
 		</div>
 	</div>
-	
-    <script src="/bower_components/vue/dist/vue-min.js"></script>
-    <script src="/bower_components/jquery/dist/jquery-min.js"></script>
-    <script src="/bower_components/notify/notification-min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/admin.js"></script>
-    
-    <script>
+
+	<script>
         var GLOBAL = {
             url : '<%= url %>',
             token : '<%= token %>',
             error : '<%= error %>'
         };
     </script>
+    
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/notify/notification.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/admin.js"></script>
+    
+
 </body>
 </html>
