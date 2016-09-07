@@ -13,7 +13,7 @@ module.exports = {
                   room.getRoom(req.params.token).setName("Room : ["+req.params.token+"]");
                   res.render('user.ejs', {url: req.headers.host,
                                         room: req.params.token,
-                                        error: false
+                                        error: null
                   });
                 }else{
                   console.log("La room n'a pas encore configurée.");

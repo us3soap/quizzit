@@ -1,81 +1,86 @@
-(function() {
+/* global Vue*/
+/* global io*/
+/* global $*/
+var socket = io.connect(GLOBAL.url);
 
-    var socket = io.connect(GLOBAL.url);
-    
-    var maVue = new Vue({
-        el: '#user-view',
-        partyStarted: false,
-        partyReload: false,
-        userToken: '',
-        pseudo: '',
-        showModalInfo: false,
-        showCommandTool: true,
-        showRecapReponse: false,
+new Vue({
+    el: '#content',
+    data: {
+        loading : false,
+        error : GLOBAL.error,
+        room : GLOBAL.token,
+        state: {
+            loading : false,
+            step : ''
+        },
+        user: {
+          token : '',
+          pseudo: '',
+          debug : ''
+        },
         reponseDonnee: 0,
         reponseDonneeText: '',
-        question: {},
-        data: {},
-        ready: function() {
-
-            socket.on('start-party-users-' + GLOBAL.token, function (data) {
-                maVue.question = data;
-                maVue.partyStarted = true;
-                maVue.partyReload = false;
-            });
-            socket.on('reload-party-' + GLOBAL.token, function (data) {
-                console.log('user.ejs : reload-party-token reçu');
-                maVue.partyStarted = false;
-                maVue.partyReload = true;
+        question: {}
+    },
+    ready: function() {
+        
+        this.state.loading = true;
+        this.state.step = "login";
+        $("#content").show();
+        
+        var that = this;
+        
+        socket.on('start-party-users-' + this.room, function (data) {
+            that.question = data;
+            that.partyStarted = true;
+            that.partyReload = false;
+        });
+        
+        socket.on('reload-party-' + this.room, function (data) {
+            that.partyStarted = false;
+            that.partyReload = true;
+        });
+        
+    },
+    methods: {
+        login: function () {
+            
+            var that = this;
+            
+            socket.emit('user', { pseudo: this.user.pseudo, room: this.room }, function (data) {
+                that.user.token = data['userToken'];
+                if (that.user.token !== false) {
+                    that.state.step = 'wait';
+                } else {
+                    that.error = "Désolé, la partie n'est pas accessible.";
+                }
             });
         },
-        methods: {
-            beginOnClick: function () {
-                this.pseudo = $("#pseudo").val();
-                socket.emit('user', { pseudo: this.pseudo, room: GLOBAL.token }, function (dataRetour) {
-                    maVue.userToken = dataRetour['userToken'];
-                    if (maVue.userToken != false) {
-                        maVue.msgDebug = dataRetour['userToken'];
-                        maVue.alreadyLogged = true;
-                    } else {
-                        maVue.msgInfo = "Désolé, la partie n'est pas accessible.";
-                    }
-                    maVue.gererAffichage('WaitStarting');
-                });
-            },
-            gererAffichage: function (idDivAAfficher) {
-                $("#UserLoginView").hide();
-                $("#WaitStarting").hide();
-                $("#UserReloadPartiView").hide();
-                $("#PartyStarted").hide();
-                
-                $("#" + idDivAAfficher).show();
-            },
-            reloadSameParty: function () {
-                socket.emit('reloadParty', { displayAdmin: false, pseudo: this.pseudo, room: GLOBAL.token}, function (data) {});
-            },
-            reloadAdmin: function () {
-                socket.emit('reloadParty', { displayAdmin: true, pseudo: this.pseudo, room: GLOBAL.token}, function (dataRetour) {
-                    document.location = "/admin/" + dataRetour['room'];
-                });
-            },
-            reponseOnclick: function (btnNo) {
-                this.reponseDonnee = btnNo;
-                this.reponseDonneeText = this.question['reponse' + btnNo];
-                this.showCommandTool = false;
-                this.showRecapReponse = true;
-                socket.emit('recolte-reponse', {
-                    reponse: 'reponse' + btnNo,
-                    id: this.props.question.idquestion
-                }, function (dataRetour) {
-                    console.log(dataRetour);
-                });
-            },
-            afficherReponse: function (btnNo) {
-                $("#reponseChoisie").show();
-            },
-            cacherReponse: function (btnNo) {
-                $("#reponseChoisie").hide();
-            }
-        }
-    })
+        // reloadSameParty: function () {
+        //     socket.emit('reloadParty', { displayAdmin: false, pseudo: this.pseudo, room: GLOBAL.token}, function (data) {});
+        // },
+        // reloadAdmin: function () {
+        //     socket.emit('reloadParty', { displayAdmin: true, pseudo: this.pseudo, room: GLOBAL.token}, function (dataRetour) {
+        //         document.location = "/admin/" + dataRetour['room'];
+        //     });
+        // },
+        // reponseOnclick: function (btnNo) {
+        //     this.reponseDonnee = btnNo;
+        //     this.reponseDonneeText = this.question['reponse' + btnNo];
+        //     this.showCommandTool = false;
+        //     this.showRecapReponse = true;
+        //     socket.emit('recolte-reponse', {
+        //         reponse: 'reponse' + btnNo,
+        //         id: this.props.question.idquestion
+        //     }, function (dataRetour) {
+        //         console.log(dataRetour);
+        //     });
+        // },
+        // afficherReponse: function (btnNo) {
+        //     $("#reponseChoisie").show();
+        // },
+        // cacherReponse: function (btnNo) {
+        //     $("#reponseChoisie").hide();
+        // }
+    }
 });

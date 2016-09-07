@@ -5,9 +5,10 @@ var socket = io.connect(GLOBAL.url);
 new Vue({
     el: '#content',
     data: {
-        loading : false,
         error : GLOBAL.error,
+        room : GLOBAL.token,
         state: {
+            loading : false,
             step : ''
         },
         nomPage : 'Paramétrage de votre partie',
@@ -40,7 +41,7 @@ new Vue({
         }
     },
     ready: function() {
-        this.loading = true;
+        this.state.loading = true;
         $("#content").show();
     },
     methods: {
@@ -70,7 +71,7 @@ new Vue({
             if (! this.form.valid) {
                 $.notify(this.form.msg);
             }else{
-                var parametres = {'room': GLOBAL.token, 'nbUsersMax': this.param.user, 'nbQuestions' : this.param.question, 'timerQuestion' : this.param.timer};
+                var parametres = {'room': this.room, 'nbUsersMax': this.param.user, 'nbQuestions' : this.param.question, 'timerQuestion' : this.param.timer};
                 socket.emit('param-room', parametres , function (data) {
                     if (data["url"] != null){
                         document.location=data["url"];
