@@ -40,10 +40,10 @@
                 
                 <div id="PartyStarted" v-if="state.step === 'game'">
                     <div id="listeReponse" class="btn-wrapper">
-                        <div class="btn" v-on:click="reponseOnclick(this,1)">{{reponse1}}</div>
-                        <div class="btn" v-on:click="reponseOnclick(this,2)">{{reponse2}}</div>
-                        <div class="btn" v-on:click="reponseOnclick(this,3)">{{reponse3}}</div>
-                        <div class="btn" v-on:click="reponseOnclick(this,4)">{{reponse4}}</div>
+                        <div class="btn" v-on:click="reponseOnclick(this,1)">{{question.reponse1}}</div>
+                        <div class="btn" v-on:click="reponseOnclick(this,2)">{{question.reponse2}}</div>
+                        <div class="btn" v-on:click="reponseOnclick(this,3)">{{question.reponse3}}</div>
+                        <div class="btn" v-on:click="reponseOnclick(this,4)">{{question.reponse4}}</div>
                     </div>
                     <div class="recap-wrapper">
                         <div>

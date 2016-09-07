@@ -14,7 +14,7 @@ module.exports = {
             var code = qr.image(urlQr, { type: 'svg' });
             res.type('svg');
             code.pipe(res);
-            console.log('qr-code affiché : '+ urlQr );
+            console.log('qrcode.js', 'qr-code affiché : '+ urlQr );
         }
         
     },
@@ -29,7 +29,7 @@ module.exports = {
             var code = qr.image(urlQr, { type: 'svg' });
             res.type('svg');
             code.pipe(res);
-            console.log('qr-code affiché : '+ urlQr );
+            console.log('qrcode.js', 'qr-code affiché : '+ urlQr );
         }
     }
 };

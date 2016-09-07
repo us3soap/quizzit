@@ -1,6 +1,7 @@
 /* global Vue*/
 /* global io*/
 /* global $*/
+'use strict';
 var socket = io.connect(GLOBAL.url);
 
 new Vue({
@@ -18,27 +19,27 @@ new Vue({
           pseudo: '',
           debug : ''
         },
-        reponseDonnee: 0,
-        reponseDonneeText: '',
+        reponse : {
+            id : 0,
+            text : ''
+        },
         question: {}
     },
     ready: function() {
         
         this.state.loading = true;
-        this.state.step = "login";
-        $("#content").show();
+        this.state.step = 'login';
+        $('#content').show();
         
         var that = this;
         
         socket.on('start-party-users-' + this.room, function (data) {
             that.question = data;
-            that.partyStarted = true;
-            that.partyReload = false;
+            that.state.step = 'game';
         });
         
         socket.on('reload-party-' + this.room, function (data) {
-            that.partyStarted = false;
-            that.partyReload = true;
+            that.state.step = 'reload';
         });
         
     },
@@ -48,11 +49,11 @@ new Vue({
             var that = this;
             
             socket.emit('user', { pseudo: this.user.pseudo, room: this.room }, function (data) {
-                that.user.token = data['userToken'];
+                that.user.token = data.userToken;
                 if (that.user.token !== false) {
                     that.state.step = 'wait';
                 } else {
-                    that.error = "Désolé, la partie n'est pas accessible.";
+                    that.error = 'Désolé, la partie n\'est pas accessible.';
                 }
             });
         },

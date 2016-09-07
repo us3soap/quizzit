@@ -8,47 +8,59 @@ module.exports = function(io) {
     
         // Socket de connexion d'un nouveau joueur.
         socket.on('user', function (data, fn) {
-            console.log('Inscription de : ' + data["pseudo"] + ' dans la room ' + data["room"]);
-            var userToken = room.getRoom(data["room"]).memberJoin();
+            
+            console.log('socket.js', 'Inscription de :', data.pseudo, 'dans la room', data.room);
+            
+            var userToken = room.getRoom(data.room).memberJoin();
+            
             // Si le user est valide, on l'ajoute sur la page de la room.
             if(userToken){
-    
-                //Sauvegarde du username et de la room dans la session
-                socket.username = data["pseudo"];
-                socket.room = data["room"];
+                socket.username = data.pseudo;
+                socket.room = data.room;
                 socket.token = userToken;
                 socket.score = 0;
+                
+                var _data = {
+                    user : data.pseudo,
+                    usertoken : userToken,
+                    nbUsers : room.getRoom(data.room).getMembers().length
+                };
     
-                socket.broadcast.emit('new-user-'+data["room"], {user : data["pseudo"],
-                                                                    usertoken : userToken,
-                                                                    nbUsers : room.getRoom( data["room"]).getMembers().length});
+                socket.broadcast.emit('new-user-'+data.room, _data);
             }
     
-            if(! room.getRoom(data["room"]).notEnough()){
+            if(! room.getRoom(data.room).notEnough()){
+                console.log('socket.js', 'La room :', data.room, 'est prête à jouer');
                 socket.broadcast.emit('start-party-room-'+data["room"]);
             }
-            console.log('retour du socket user : ' + userToken)
-            //Le token est retourné au client pour identifier les traitements
+            
             fn({userToken:userToken});
         });
     
         // Socket permettant l'administration de la salle.
         socket.on('param-room', function (data, fn) {
-            console.log("parametrage de la partie " + data["room"]);
-            if(room.getRoom(data["room"]) != false){
-                room.getRoom(data["room"]).setReady();
-                room.getRoom(data["room"]).open();
+            
+            console.log('socket.js', "Parametrage de la partie", data.room);
+            
+            var _room = room.getRoom(data["room"]);
+            
+            if(_room != false){
+                _room.setReady();
+                _room.open();
                 //--Parametrage
-                room.getRoom(data["room"]).setMaxNbMembers(data["nbUsersMax"]);
-                room.getRoom(data["room"]).setMinNbMembers(data["nbUsersMax"]);
-                room.getRoom(data["room"]).setTimerQuestion(data["timerQuestion"]);
+                _room.setMaxNbMembers(data.nbUsersMax);
+                _room.setMinNbMembers(data.nbUsersMax);
+                _room.setTimerQuestion(data.timerQuestion);
 
-                //--Load questions si l'utilisateur en a saisi
-                questionnaire.loadQuestionnaire(questions, data["room"]);
+                questionnaire.loadQuestionnaire(questions, data.room);
                 
-                socket.emit('create-room-'+data["room"], {nbUsersMax : data["nbUsersMax"],
-                                                                        nbQuestions : data["nbQuestions"],
-                                                                        timerQuestion : data["timerQuestion"]});
+                var _data = {
+                    nbUsersMax : data.nbUsersMax,
+                    nbQuestions : data.nbQuestions,
+                    timerQuestion : data.timerQuestion
+                };
+                
+                socket.emit('create-room-'+data.room, _data);
                 
                                                                         
                 fn({url: "/room/"+data["room"]});
@@ -59,31 +71,50 @@ module.exports = function(io) {
     
         // Socket permettant le lancement de la partie.
         socket.on('start', function (data, fn) {
-            console.log('Debut de la party : '+data["room"]);
-            room.getRoom(data["room"]).close();
+            
+            console.log('socket.js', 'Debut de la partie : ' + data.room);
+            
+            room.getRoom(data.room).close();
             socket.broadcast.emit('cycle-question');
+            
             fn(true);
         });
     
         // Socket d'écoute pour renvoyer une question aléa aux clients (index + user).
         socket.on('recup-question', function (data, fn) {
-            var fluxQuestion = questionnaire.getQuestionnaire(data["room"]).getFluxQuestionAleatoire();
-            socket.broadcast.emit('start-party-users-'+data["room"], fluxQuestion);
-            fn(fluxQuestion);
+            
+            var _questionnaire = questionnaire.getQuestionnaire(data.room);
+            
+            if(_questionnaire){
+                
+                var fluxQuestion = _questionnaire.getFluxQuestionAleatoire();
+                socket.broadcast.emit('start-party-users-'+data.room, fluxQuestion);
+                fn(fluxQuestion);
+                
+            } else {
+                
+                fn(false);
+                
+            }
+            
+
         });
     
         socket.on('recolte-reponse', function (data, fn) {
-            var point = 0;
-            if(questionnaire.getQuestionnaire(socket.room).checkResponse(data["id"], data["reponse"])){
-                point = 1;
-            }
-            socket.broadcast.emit('maj-party-users-'+socket.room, {nbPoint : point, usertoken : socket.token});
+            
+            var _data = {
+                nbPoint : questionnaire.getQuestionnaire(socket.room).checkResponse(data["id"], data["reponse"]) ? 1 : 0,
+                usertoken : socket.token
+            };
+
+            socket.broadcast.emit('maj-party-users-'+socket.room, _data);
+            
             fn(true);
         });
     
         //demander l'affichage des boutons reload sur User.ejs
         socket.on('display-reload-party', function (data, fn) {
-            console.log("serveur.js : fin de partie : affichage des boutons 'reload' pour la room " + socket.room);
+            console.log('socket.js', 'fin de partie : affichage des boutons reload pour la room ' + socket.room);
             socket.broadcast.emit('reload-party-');
             fn(true);
         });

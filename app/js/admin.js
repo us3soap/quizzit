@@ -1,6 +1,7 @@
 /* global Vue*/
 /* global io*/
 /* global $*/
+'use strict';
 var socket = io.connect(GLOBAL.url);
 new Vue({
     el: '#content',
@@ -36,30 +37,30 @@ new Vue({
             { text : '60' }
         ],
         form : {
-            msg : "",
+            msg : '',
             valid : true
         }
     },
     ready: function() {
         this.state.loading = true;
-        $("#content").show();
+        $('#content').show();
     },
     methods: {
         controleDeSurface : function() {
-            this.form.msg = "";
+            this.form.msg = '';
             this.form.valid = true;
             
             //verif des 3 champs number
             if (! this.param.user.toString().match(/^[0-9]{1,2}$/)) {
-                this.form.msg = "Veuillez indiquer le nombre de participants.\n";
+                this.form.msg = 'Veuillez indiquer le nombre de participants.\n';
                 this.form.valid = false;
             }
             if(! this.param.question.toString().match(/^[0-9]{1,2}$/)){
-                this.form.msg = "Veuillez indiquer le nombre de questions.\n";
+                this.form.msg = 'Veuillez indiquer le nombre de questions.\n';
                 this.form.valid = false;
             }
             if(! this.param.timer.toString().match(/^[0-9]{1,2}$/)){
-                this.form.msg = "Veuillez indiquer le temps de réponse autorisé.\n";
+                this.form.msg = 'Veuillez indiquer le temps de réponse autorisé.\n';
                 this.form.valid = false;
             }
         },
@@ -73,8 +74,8 @@ new Vue({
             }else{
                 var parametres = {'room': this.room, 'nbUsersMax': this.param.user, 'nbQuestions' : this.param.question, 'timerQuestion' : this.param.timer};
                 socket.emit('param-room', parametres , function (data) {
-                    if (data["url"] != null){
-                        document.location=data["url"];
+                    if (data.url !== null){
+                        document.location = data.url;
                     }
                 });
             }
@@ -82,13 +83,13 @@ new Vue({
         
         afficherDiv : function(step) {
             this.state.step = step; 
-            $(".avant").addClass("afficherVerso");
-            $(".arriere").addClass("afficherRecto");
+            $('.avant').addClass('afficherVerso');
+            $('.arriere').addClass('afficherRecto');
         },
         
         retourEcran : function() {
-            $(".arriere").attr("class","arriere");
-            $(".avant").attr("class","avant");
+            $('.arriere').attr('class','arriere');
+            $('.avant').attr('class','avant');
         }
     }
 });
