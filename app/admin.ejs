@@ -9,20 +9,26 @@
 </head>
 
 <body>
-	<div id="content" class="content" v-if="load">
+	<div id="content" class="content" style="display:none">
 		
 		<div class="titrePage">
 			<p> {{ nomPage }} </p>
 		</div>
 		
-		<div class="scene">
+		<div class="scene" v-if="error !== ''">
+			<p> {{ error }} </p>
+		</div>
+		
+		<div class="scene" v-if="error === ''">
 			<div class="flip">
 				<div class="avant">
 					
 					<table>
 						<tr>
 							<td v-on:click="afficherDiv('listeUsers')">
-								<h4 id="users">{{ param.user }}</br>utilisateur</h4>
+								<h4 id="users">{{ param.user }}</br>
+								<span v-if="param.user > 1">utilisateurs</span>
+								<span v-else>utilisateur</span>
 							</td>
 							<td v-on:click="afficherDiv('listeQuestions')">
 								<h4 id="questions">{{ param.question }}</br>questions</h4>
@@ -88,6 +94,5 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/admin.js"></script>
     
-
 </body>
 </html>
