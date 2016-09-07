@@ -9,7 +9,7 @@
 </head>
 
 <body>
-	<div id="content" class="content">
+	<div id="content" class="content" v-if="load">
 		
 		<div class="titrePage">
 			<p> {{ nomPage }} </p>
@@ -30,7 +30,7 @@
 						</tr>
 						<tr>
 							<td v-on:click="afficherDiv('listeTemps')">
-								<h4 id="temps">{{ param.time }} </br>secondes</h4>
+								<h4 id="temps">{{ param.timer }} </br>secondes</h4>
 							</td>
 						</tr>
 						
@@ -43,27 +43,27 @@
 				
 				<div class="arriere">
 					
-					<div id="listeUsers" class="cache">
+					<div id="listeUsers" v-if="state.step === 'listeUsers'">
 						<h4>Nombre d'utilisateurs</h4>
 						<span class="custom-dropdown custom-dropdown--emerald">
-						<select id="nbUsersMax" class="custom-dropdown__select custom-dropdown__select--emerald" v-on:change="retourEcran();">
+						<select id="nbUsersMax" class="custom-dropdown__select custom-dropdown__select--emerald" v-model="param.user" v-on:change="retourEcran">
 							<option v-for="nbUsers in nbUsersMax">
 						  		{{ nbUsers.text }}
 						  	</option>
 						</select>
 						</span>
 					</div>
-					<div id="listeQuestions" class="cache">
+					<div id="listeQuestions" v-if="state.step === 'listeQuestions'">
 						<h4>Nombre de questions</h4>
-						<select id="nbQuestions" class="form-control" v-on:change="retourEcran();">
+						<select id="nbQuestions" class="form-control" v-model="param.question" v-on:change="retourEcran">
 							<option v-for="nbQuestions in nbQuestionsMax">
 						  		{{ nbQuestions.text }}
 						  	</option>
 						</select>
 					</div>
-					<div id="listeTemps" class="cache">
+					<div id="listeTemps" v-if="state.step === 'listeTemps'">
 						<h4>Temps de réponse autorisé</h4>
-						<select id="timerQuestion" class="form-control" v-on:change="retourEcran();">
+						<select id="timerQuestion" class="form-control" v-model="param.timer" v-on:change="retourEcran">
 							<option v-for="timerQuestion in timerQuestionMax">
 						  		{{ timerQuestion.text }}
 						  	</option>

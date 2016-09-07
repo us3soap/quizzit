@@ -4,7 +4,10 @@
     var socket = io.connect(GLOBAL.url);
     new Vue({
         el: '#content',
-        data: {
+        data: {load : true,
+            state: {
+                step : ''
+            },
             nomPage : 'Paramétrage de votre partie',
             param : {
               user : 1,
@@ -70,22 +73,13 @@
                 }
             },
             
-            afficherDiv : function(div) {
-
-                $("#listeTemps").hide();
-                $("#listeQuestions").hide();
-                $("#listeUsers").hide();
-                $("#" + div).show();
+            afficherDiv : function(step) {
+                this.state.step = step; 
                 $(".avant").addClass("afficherVerso");
                 $(".arriere").addClass("afficherRecto");
             },
             
             retourEcran : function() {
-                var msg = parseInt($("#nbUsersMax").val()) > 1 ? "utilisateurs" : "utilisateur";
-                $("#users").html($("#nbUsersMax").val() + " </br>" + msg);
-                $("#questions").html($("#nbQuestions").val() + " </br>questions");
-                $("#temps").html($("#timerQuestion").val() + " </br>secondes");
-                
                 $(".arriere").attr("class","arriere");
                 $(".avant").attr("class","avant");
             }
