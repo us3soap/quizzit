@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles/user.css">
     
+        <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="/bower_components/vue/dist/vue.js"></script>
+        <script src="/js/notify.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/user.js"></script>
+        
+        <script>
+            var GLOBAL = {
+                url : '<%= url %>',
+                token: '<%= room %>',
+            };
+        </script>
 </head>
     <body>
         <div id="user-view" class="pages">
@@ -44,24 +56,13 @@
                 <div class="recap-wrapper">
                     <div>
                         <h3>Vous avez répondu :</h3>
-                        <h3>{{reponseDonneeText}}</h3>
+                        <h3 id="reponseChoisie" style="display:none;">- {{reponseDonneeText}}</h3>
+                        <button v-on:keydown="afficherReponse" v-on:keyup="cacherReponse">Afficher</button>
                     </div>
                 </div>
             </div>
         </div>
         
-        <script src="/bower_components/vue/dist/vue.js"></script>
-        <script src="/bower_components/jquery/dist/jquery.min.js"></script>
-        <script src="/js/notify.min.js"></script>
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="/js/user.js"></script>
-        
-        <script>
-            var GLOBAL = {
-                url : '<%= url %>',
-                token: '<%= room %>',
-            };
-        </script>
         
     </body>
 </html>

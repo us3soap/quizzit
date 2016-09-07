@@ -45,16 +45,18 @@
             </div>
             <div class="scoring"></div>
         </div>
-        <script src="/socket.io/socket.io.js"></script>
+        
         <script>
             var GLOBAL = {
                 url: '<%= url %>',
                 token: '<%= token %>',
                 ready2play: <%= ready2play %>
             };
-            
-            var socket = io.connect(GLOBAL.url);
-            socket.emit('user', {  pseudo: 'test', room: GLOBAL.token  }, function (data) {});
         </script>
+        <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="/bower_components/vue/dist/vue.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/dashboard.js"></script>
+        
     </body>
 </html>

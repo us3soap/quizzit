@@ -1,6 +1,5 @@
-$(function() {
-    
-    
+//<![CDATA[
+window.onload=function(){
     var socket = io.connect(GLOBAL.url);
     
     var maVue = new Vue({
@@ -16,25 +15,24 @@ $(function() {
         reponseDonneeText: '',
         question: {},
         data: {},
-        methods: {
-            initview : function() {
+        ready: function() {
 
-                socket.on('start-party-users-' + GLOBAL.token, function (data) {
-                    maVue.question = data;
-                    maVue.partyStarted = true;
-                    maVue.partyReload = false;
-                });
-                socket.on('reload-party-' + GLOBAL.token, function (data) {
-                    console.log('user.ejs : reload-party-token reçu');
-                    maVue.partyStarted = false;
-                    maVue.partyReload = true;
-                });
-            },
+            socket.on('start-party-users-' + GLOBAL.token, function (data) {
+                maVue.question = data;
+                maVue.partyStarted = true;
+                maVue.partyReload = false;
+            });
+            socket.on('reload-party-' + GLOBAL.token, function (data) {
+                console.log('user.ejs : reload-party-token reçu');
+                maVue.partyStarted = false;
+                maVue.partyReload = true;
+            });
+        },
+        methods: {
             beginOnClick: function () {
                 this.pseudo = $("#pseudo").val();
                 socket.emit('user', { pseudo: this.pseudo, room: GLOBAL.token }, function (dataRetour) {
                     maVue.userToken = dataRetour['userToken'];
-                    alert(dataRetour['userToken']);
                     if (maVue.userToken != false) {
                         maVue.msgDebug = dataRetour['userToken'];
                         maVue.alreadyLogged = true;
@@ -71,9 +69,13 @@ $(function() {
                 }, function (dataRetour) {
                     console.log(dataRetour);
                 });
+            },
+            afficherReponse: function (btnNo) {
+                $("#reponseChoisie").show();
+            },
+            cacherReponse: function (btnNo) {
+                $("#reponseChoisie").hide();
             }
         }
     })
-    
-
-});
+}//]]>

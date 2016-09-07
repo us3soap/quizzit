@@ -27,13 +27,14 @@ module.exports = function(io) {
             if(! room.getRoom(data["room"]).notEnough()){
                 socket.broadcast.emit('start-party-room-'+data["room"]);
             }
-    
+            console.log('retour du socket user : ' + userToken)
             //Le token est retourné au client pour identifier les traitements
             fn({userToken:userToken});
         });
     
         // Socket permettant l'administration de la salle.
         socket.on('param-room', function (data, fn) {
+            console.log("parametrage de la partie " + data["room"]);
             if(room.getRoom(data["room"]) != false){
                 room.getRoom(data["room"]).setReady();
                 room.getRoom(data["room"]).open();
@@ -41,13 +42,14 @@ module.exports = function(io) {
                 room.getRoom(data["room"]).setMaxNbMembers(data["nbUsersMax"]);
                 room.getRoom(data["room"]).setMinNbMembers(data["nbUsersMax"]);
                 room.getRoom(data["room"]).setTimerQuestion(data["timerQuestion"]);
-                
+
                 //--Load questions si l'utilisateur en a saisi
                 questionnaire.loadQuestionnaire(questions, data["room"]);
                 
-                socket.to('/'+data["room"]).emit('create-room-'+data["room"], {nbUsersMax : data["nbUsersMax"],
+                socket.emit('create-room-'+data["room"], {nbUsersMax : data["nbUsersMax"],
                                                                         nbQuestions : data["nbQuestions"],
                                                                         timerQuestion : data["timerQuestion"]});
+                
                                                                         
                 fn({url: "/room/"+data["room"]});
             }else{
