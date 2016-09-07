@@ -1,5 +1,5 @@
-//<![CDATA[
-window.onload=function(){
+(function() {
+
     var socket = io.connect(GLOBAL.url);
     
     var maVue = new Vue({
@@ -78,4 +78,4 @@ window.onload=function(){
             }
         }
     })
-}//]]>
+});

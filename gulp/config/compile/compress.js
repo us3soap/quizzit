@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var minify = require('gulp-minify');
 
 gulp.task('compress', function() {
+
   gulp.src('app/js/*.js')
     .pipe(minify({
         ext:{

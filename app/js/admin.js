@@ -1,79 +1,85 @@
-$(function() {
-
-    var cptQuestion = 0;
+/* global Vue*/
+/* global io*/
+/* global $*/
     var socket = io.connect(GLOBAL.url);
     new Vue({
         el: '#content',
         data: {
             nomPage : 'Paramétrage de votre partie',
-            
+            param : {
+              user : 1,
+              question : 20,
+              timer : 15
+            },
             nbUsersMax : [
                 { text : '1' },
                 { text : '2' },
                 { text : '3' },
-                { text : '4' }],
-                
+                { text : '4' }
+            ],
             nbQuestionsMax : [
                 { text : '5' },
                 { text : '10' },
                 { text : '15' },
-                { text : '20' }],
-                
+                { text : '20' }
+            ],
             timerQuestionMax : [
                 { text : '15' },
                 { text : '30' },
                 { text : '45' },
-                { text : '60' }]
+                { text : '60' }
+            ],
+            form : {
+                msg : "",
+                valid : true
+            }
         },
         methods: {
             controleDeSurface : function() {
-                var erreur = "";
-        
-                //verif des 3 champs number
-                if (!$("#nbUsersMax").val().match(/^[0-9]{1,2}$/)) {
-                    erreur += "Veuillez indiquer le nombre de participants.\n";
-                }
-                if(!$("#nbQuestions").val().match(/^[0-9]{1,2}$/)){
-                    erreur += "Veuillez indiquer le nombre de questions.\n";
-                }
-                if(!$("#timerQuestion").val().match(/^[0-9]{1,2}$/)){
-                    erreur += "Veuillez indiquer le temps de réponse autorisé.\n";
-                }
+                this.form.msg = "";
+                this.form.valid = true;
                 
-                return erreur;
+                //verif des 3 champs number
+                if (! this.param.user.toString().match(/^[0-9]{1,2}$/)) {
+                    this.form.msg = "Veuillez indiquer le nombre de participants.\n";
+                    this.form.valid = false;
+                }
+                if(! this.param.question.toString().match(/^[0-9]{1,2}$/)){
+                    this.form.msg = "Veuillez indiquer le nombre de questions.\n";
+                    this.form.valid = false;
+                }
+                if(! this.param.timer.toString().match(/^[0-9]{1,2}$/)){
+                    this.form.msg = "Veuillez indiquer le temps de réponse autorisé.\n";
+                    this.form.valid = false;
+                }
             },
             
             createRoom : function() {
-                var nbUserSaisi = $("#nbUsersMax").val();
-                var nbQuestionsSaisi = $("#nbQuestions").val();
-                var timerQuestion = $("#timerQuestion").val();
                 
-                //controle de surface, return "" si pas d'erreur.
-                var messageErreur = this.controleDeSurface();
+                this.controleDeSurface();
                 
-                if (messageErreur != "") {
-                    $.notify(messageErreur);
+                if (! this.form.valid) {
+                    $.notify(this.form.msg);
                 }else{
-                    var parametres = {'room': GLOBAL.token, 'nbUsersMax': nbUserSaisi, 'nbQuestions' : nbQuestionsSaisi, 'timerQuestion' : timerQuestion};
+                    var parametres = {'room': GLOBAL.token, 'nbUsersMax': this.param.user, 'nbQuestions' : this.param.question, 'timerQuestion' : this.param.timer};
                     socket.emit('param-room', parametres , function (data) {
-                        alert("après socket.emit");
                         if (data["url"] != null){
                             document.location=data["url"];
                         }
                     });
                 }
             },
+            
             afficherDiv : function(div) {
 
                 $("#listeTemps").hide();
                 $("#listeQuestions").hide();
                 $("#listeUsers").hide();
-               
                 $("#" + div).show();
-               
                 $(".avant").addClass("afficherVerso");
                 $(".arriere").addClass("afficherRecto");
             },
+            
             retourEcran : function() {
                 var msg = parseInt($("#nbUsersMax").val()) > 1 ? "utilisateurs" : "utilisateur";
                 $("#users").html($("#nbUsersMax").val() + " </br>" + msg);
@@ -84,5 +90,5 @@ $(function() {
                 $(".avant").attr("class","avant");
             }
         }
-    })
+   
 });
