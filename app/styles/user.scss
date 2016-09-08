@@ -16,93 +16,114 @@ html, body {
     font-family: sans-serif;
 }
 
-#user-view{height: 100%;}
+#content{
+    height: 100%;
+    
+}
 
 .content{
     display: flex;
     flex-direction: column;
     height: 100%;
     background-color: #6699ff;
+    
+    .scene{
+        font-family: 'Sigmar One', cursive;
+        font-size: 25px;
+    }
+    
+    .login-wrapper {
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        
+        h3{
+            text-align: center;
+            
+        }
+        
+        .login-form {
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            height: 200px;
+            margin-top: -100px;
+            margin-bottom: -100px;
+        }
+        
+        button {
+            font-size: 20px;
+            width: 80%;
+            border: none;
+            height: 50px;
+            margin-top: 20px;
+            background-color: #8BB600;
+            color: #fff;
+        }
+        
+        button:active {
+            opacity: .8;
+            
+        }
+        
+        input[type='text']{
+            width: 80%;
+            font-size: 20px;
+            padding: 10px;
+            text-align: center;
+        }
+    }
+    
+    .pad-wrapper{
+        height: 100%;
+        
+        .btn-wrapper{
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            
+            .btn{
+                flex-grow: 1;
+                text-align: center;
+                color: white;
+                font-size: 20px;
+            }
+            
+            .btn:active { 
+                opacity: .8;
+            }
+            
+            .btn:first-child { 
+                background-color: #69B854;
+            }
+            
+            .btn:nth-child(2) {
+                background-color: #6AC0E0;
+            }
+            
+            .btn:nth-child(3) {
+                background-color: #EBAD41;
+                
+            }
+            
+            .btn:nth-child(4) { 
+                background-color: #D1534C;
+            }
+        }
+        
+    }
+    
+    .recap-wrapper{
+        display: flex;
+        width: 100%;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+
 }
 
-h4{
-    color: white;
-}
 
-/* login form */
-.login-wrapper {
-    height: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.login-wrapper h3{text-align: center;}
-
-.login-form{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
-}
-
-.login-form button{
-    font-size: 20px;
-    width: 80%;
-    border: none;
-    height: 50px;
-    margin-top: 20px;
-    background-color: #8BB600;
-    color: #fff;
-}
-
-.login-form button:active{opacity: .8;}
-
-.login-form input[type='text']{
-    width: 80%;
-    font-size: 20px;
-    padding: 10px;
-    text-align: center;
-}
-
-
-
-/* pad */
-
-.pad-wrapper{height: 100%;}
-
-.btn-wrapper{
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.btn-wrapper .btn{
-    display: flex;
-    flex: 1;
-    align-items: center;
-    justify-content: center;
-    color: #FFF;
-    font-size: 18px;
-}
-
-.btn-wrapper .btn:active{opacity: .8;}
-
-.btn-wrapper .btn:first-child{background-color: #69B854;}
-.btn-wrapper .btn:nth-child(2){background-color: #6AC0E0;}
-.btn-wrapper .btn:nth-child(3){background-color: #EBAD41;}
-.btn-wrapper .btn:nth-child(4){background-color: #D1534C;}
-
-.recap-wrapper{
-    display: flex;
-    width: 100%;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.scene{
-    font-family: 'Sigmar One', cursive;
-    font-size: 25px;
-}
