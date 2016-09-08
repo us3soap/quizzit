@@ -40,7 +40,7 @@ module.exports = function(io) {
         // Socket permettant l'administration de la salle.
         socket.on('param-room', function (data, fn) {
             
-            console.log('socket.js', "Parametrage de la partie", data.room);
+            console.log('socket.js', "Parametrage de la partie", data.room, ' : nbUsers =>', data.nbUsersMax , ', nbQuestions =>', data.nbQuestions, ', timer =>', data.timerQuestion );
             
             var _room = room.getRoom(data["room"]);
             
@@ -51,6 +51,7 @@ module.exports = function(io) {
                 _room.setMaxNbMembers(data.nbUsersMax);
                 _room.setMinNbMembers(data.nbUsersMax);
                 _room.setTimerQuestion(data.timerQuestion);
+                _room.setNbQuestions(data.nbQuestions);
 
                 questionnaire.loadQuestionnaire(questions, data.room);
                 
@@ -60,7 +61,7 @@ module.exports = function(io) {
                     timerQuestion : data.timerQuestion
                 };
                 
-                socket.emit('create-room-'+data.room, _data);
+                socket.broadcast.emit('create-room-'+data.room, _data);
                 
                                                                         
                 fn({url: "/room/"+data["room"]});
