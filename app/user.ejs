@@ -38,17 +38,16 @@
             </div>
             
             <div id="PartyStarted" class="pad-wrapper" v-if="error === '' && state.step === 'game'">
-                <div id="listeReponse" class="btn-wrapper" v-if="reponse.id !== 0">
-                    <div class="btn" v-on:click="reponseOnclick(this,1)">{{question.reponse1}}</div>
-                    <div class="btn" v-on:click="reponseOnclick(this,2)">{{question.reponse2}}</div>
-                    <div class="btn" v-on:click="reponseOnclick(this,3)">{{question.reponse3}}</div>
-                    <div class="btn" v-on:click="reponseOnclick(this,4)">{{question.reponse4}}</div>
+                <div id="listeReponse" class="btn-wrapper" v-if="reponse.id === 0">
+                    <div class="btn" v-on:click="reply(1)">{{question.reponse1}}</div>
+                    <div class="btn" v-on:click="reply(2)">{{question.reponse2}}</div>
+                    <div class="btn" v-on:click="reply(3)">{{question.reponse3}}</div>
+                    <div class="btn" v-on:click="reply(4)">{{question.reponse4}}</div>
                 </div>
-                <div class="recap-wrapper" v-if="reponse.id === 0">
+                <div class="recap-wrapper" v-if="reponse.id !== 0">
                     <div>
-                        <h3>Vous avez répondu :</h3>
-                        <h3 id="reponseChoisie" style="display:none;">- {{reponseDonneeText}}</h3>
-                        <button v-on:keydown="afficherReponse" v-on:keyup="cacherReponse">Afficher</button>
+                        <h3 v-if="reponse.display">{{reponse.text}}</h3>
+                        <button v-on:click="display">{{reponse.button}}</button>
                     </div>
                 </div>
             </div>

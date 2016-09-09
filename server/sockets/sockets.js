@@ -104,7 +104,7 @@ module.exports = function(io) {
         socket.on('recolte-reponse', function (data, fn) {
             
             var _data = {
-                nbPoint : questionnaire.getQuestionnaire(socket.room).checkResponse(data["id"], data["reponse"]) ? 1 : 0,
+                nbPoint : questionnaire.getQuestionnaire(socket.room).checkResponse(data.id, data.reponse) ? 1 : 0,
                 usertoken : socket.token
             };
 

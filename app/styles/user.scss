@@ -111,6 +111,20 @@ html, body {
                 background-color: #D1534C;
             }
         }
+        button {
+            font-size: 20px;
+            width: 80%;
+            border: none;
+            height: 50px;
+            margin-top: 20px;
+            background-color: #8BB600;
+            color: #fff;
+        }
+        
+        button:active {
+            opacity: .8;
+            
+        }
         
     }
     
