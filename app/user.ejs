@@ -8,12 +8,12 @@
     <body>
         <div id="content" class="content" style="display:none">
             
-            <div class="scene" v-if="error !== ''">
+            <div class="scene" v-show="error !== ''">
     			<p> {{ error }} </p>
     		</div>
     		
             
-            <div id="UserLoginView" class="login-wrapper" v-if="error === '' && state.step === 'login'">
+            <div id="UserLoginView" class="login-wrapper" v-show="error === '' && state.step === 'login'">
                 <div class="login-form">
                     <h3>Quel est votre pseudo?</h3>
                     <input type="text" id="pseudo" maxLength="14" autoComplete="off" autoFocus="true" v-model="user.pseudo" />
@@ -21,14 +21,14 @@
                 </div>
             </div>
             
-            <div id="WaitStarting" class="login-wrapper" v-if="error === '' && state.step === 'wait'">
+            <div id="WaitStarting" class="login-wrapper" v-show="error === '' && state.step === 'wait'">
                 <div>
                     <h3>Bienvenue {{user.pseudo}}</h3>
                     <div>{{user.token}}</div>
                 </div>
             </div>
             
-            <div id="UserReloadPartiView" v-if="error === '' && state.step === 'reload'">
+            <div id="UserReloadPartiView" v-show="error === '' && state.step === 'reload'">
                 <div class="login-wrapper">
                     <div class="login-form">
                         <button v-on:click="reloadSameParty">Voulez vous relancer une partie identique ?</button>
@@ -37,16 +37,16 @@
                 </div>
             </div>
             
-            <div id="PartyStarted" class="pad-wrapper" v-if="error === '' && state.step === 'game'">
-                <div id="listeReponse" class="btn-wrapper" v-if="reponse.id === 0">
+            <div id="PartyStarted" class="pad-wrapper" v-show="error === '' && state.step === 'game'">
+                <div id="listeReponse" class="btn-wrapper" v-show="reponse.id === 0">
                     <div class="btn" v-on:click="reply(1)">{{question.reponse1}}</div>
                     <div class="btn" v-on:click="reply(2)">{{question.reponse2}}</div>
                     <div class="btn" v-on:click="reply(3)">{{question.reponse3}}</div>
                     <div class="btn" v-on:click="reply(4)">{{question.reponse4}}</div>
                 </div>
-                <div class="recap-wrapper" v-if="reponse.id !== 0">
+                <div class="recap-wrapper" v-show="reponse.id !== 0">
                     <div>
-                        <h3 v-if="reponse.display">{{reponse.text}}</h3>
+                        <h3 v-show="reponse.display">{{reponse.text}}</h3>
                         <button v-on:click="display">{{reponse.button}}</button>
                     </div>
                 </div>
