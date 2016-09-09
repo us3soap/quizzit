@@ -6,7 +6,7 @@ var Member = require('./member').Member;
  */
 function Room() {
 	this.name = "";
-	this.token = randtoken.generate(16);
+	this.token = randtoken.generate(4);
 	this.members = [];
 	this.maxNbMembers = 30;
 	this.minNbMembers = 0;

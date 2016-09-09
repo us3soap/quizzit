@@ -26,4 +26,8 @@ module.exports = function(router) {
     /** User page
     **/
     router.get('/room/:token', userController.getRoom);
+    
+    /** Access page
+    **/
+    router.get('/access', userController.askRoom);
 };

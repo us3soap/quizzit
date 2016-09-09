@@ -1,7 +1,11 @@
 var room = require('../models/room/index.js');
 
 module.exports = {
-
+    
+    askRoom : function(req, res){
+        res.render('access.ejs', { error: null });
+    },
+    
     getRoom: function(req, res) {
         
         var myRoom = room.getRoom(req.params.token);
@@ -31,10 +35,10 @@ module.exports = {
               });
             }
         }else{
-            console.log('user.js', "La room", req.params.token, "n'existe pas.");
+            console.log('user.js', 'La room', req.params.token, 'n existe pas.');
             res.render('user.ejs', {url: false,
                                   room: false,
-                                  error: "La room n'existe pas."
+                                  error: 'La room '+ req.params.token + ' n existe pas.'
             });
         }
     }
