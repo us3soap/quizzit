@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="/styles/admin.css">
+	<link href="https://fonts.googleapis.com/css?family=Sigmar+One" rel="stylesheet"> 
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+</head>
+
+<body>
+	<div id="content" class="content" style="display:none">
+		
+		<div class="titrePage">
+			<p> {{ nomPage }} </p>
+		</div>
+		
+		<div class="scene" v-if="error !== ''">
+			<p> {{ error }} </p>
+		</div>
+		
+		<div class="scene" v-if="error === ''">
+			<div class="flip">
+				<div class="avant">
+					
+					<table>
+						<tr>
+							<td v-on:click="afficherDiv('listeUsers')">
+								<h4 id="users">{{ param.user }}</br>
+								<span v-if="param.user > 1">utilisateurs</span>
+								<span v-else>utilisateur</span>
+							</td>
+							<td v-on:click="afficherDiv('listeQuestions')">
+								<h4 id="questions">{{ param.question }}</br>questions</h4>
+							</td>
+						</tr>
+						<tr>
+							<td v-on:click="afficherDiv('listeTemps')">
+								<h4 id="temps">{{ param.timer }} </br>secondes</h4>
+							</td>
+						</tr>
+						
+					</table>
+					
+					<div style="margin-top:30px;">
+			    		<button id="createRoom" type="button" class="btn btn-primary" v-on:click="createRoom">C'est parti</button>
+					</div>
+				</div>
+				
+				<div class="arriere">
+					
+					<div id="listeUsers" v-if="state.step === 'listeUsers'">
+						<h4>Nombre d'utilisateurs</h4>
+						<span class="custom-dropdown custom-dropdown--emerald">
+						<select id="nbUsersMax" class="custom-dropdown__select custom-dropdown__select--emerald" v-model="param.user" v-on:change="retourEcran">
+							<option v-for="nbUsers in nbUsersMax">
+						  		{{ nbUsers.text }}
+						  	</option>
+						</select>
+						</span>
+					</div>
+					<div id="listeQuestions" v-if="state.step === 'listeQuestions'">
+						<h4>Nombre de questions</h4>
+						<select id="nbQuestions" class="form-control" v-model="param.question" v-on:change="retourEcran">
+							<option v-for="nbQuestions in nbQuestionsMax">
+						  		{{ nbQuestions.text }}
+						  	</option>
+						</select>
+					</div>
+					<div id="listeTemps" v-if="state.step === 'listeTemps'">
+						<h4>Temps de réponse autorisé</h4>
+						<select id="timerQuestion" class="form-control" v-model="param.timer" v-on:change="retourEcran">
+							<option v-for="timerQuestion in timerQuestionMax">
+						  		{{ timerQuestion.text }}
+						  	</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+        var GLOBAL = {
+            url : '<%= url %>',
+            token : '<%= token %>',
+            error : '<%= error %>'
+        };
+    </script>
+    
+    <script src="/bower_components/vue/dist/vue.min.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/notify/notification.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/admin.js"></script>
+    
+</body>
+</html>

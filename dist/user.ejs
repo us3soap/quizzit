@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <title>QuizzJS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/user.css">
+</head>
+    <body>
+        <div id="content" class="pages" style="display:none">
+            
+            <div class="scene" v-if="error !== ''">
+    			<p> {{ error }} </p>
+    		</div>
+    		
+    		<div v-if="error === ''">
+            
+                <div id="UserLoginView" class="login-wrapper" v-if="state.step === 'login'">
+                    <div class="login-form">
+                        <h3>Quel est votre pseudo?</h3>
+                        <input type="text" id="pseudo" maxLength="14" autoComplete="off" autoFocus="true" v-model="user.pseudo" />
+                        <button v-on:click="login">Commencer à jouer</button>
+                    </div>
+                </div>
+                
+                <div id="WaitStarting" class="login-wrapper" v-if="state.step === 'wait'">
+                    <div>
+                        <h3>Bienvenue {{user.pseudo}}</h3>
+                        <div>{{user.token}}</div>
+                    </div>
+                </div>
+                
+                <div id="UserReloadPartiView" v-if="state.step === 'reload'">
+                    <div class="login-wrapper">
+                        <div class="login-form">
+                            <button v-on:click="reloadSameParty">Voulez vous relancer une partie identique ?</button>
+                            <button v-on:click="reloadAdmin">Voulez vous relancer une partie avec des paramètres différents ? SOON !!!!</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="PartyStarted" class="pad-wrapper" v-if="state.step === 'game'">
+                    <div id="listeReponse" class="btn-wrapper">
+                        <div class="btn" v-on:click="reponseOnclick(this,1)">{{question.reponse1}}</div>
+                        <div class="btn" v-on:click="reponseOnclick(this,2)">{{question.reponse2}}</div>
+                        <div class="btn" v-on:click="reponseOnclick(this,3)">{{question.reponse3}}</div>
+                        <div class="btn" v-on:click="reponseOnclick(this,4)">{{question.reponse4}}</div>
+                    </div>
+                    <div class="recap-wrapper">
+                        <div>
+                            <h3>Vous avez répondu :</h3>
+                            <h3 id="reponseChoisie" style="display:none;">- {{reponseDonneeText}}</h3>
+                            <button v-on:keydown="afficherReponse" v-on:keyup="cacherReponse">Afficher</button>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <script>
+            var GLOBAL = {
+                url : '<%= url %>',
+                token: '<%= room %>',
+                error: '<%= error %>',
+            };
+        </script>
+        
+        <script src="/bower_components/vue/dist/vue.min.js"></script>
+        <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="/bower_components/notify/notification.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/user.js"></script>
+        
+
+    </body>
+</html>
