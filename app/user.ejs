@@ -8,6 +8,10 @@
     <body>
         <div id="content" class="content" style="display:none">
             
+            <div class="titrePage" v-show="state.step !== 'game'">
+    			<p> {{ nomPage }} </p>
+    		</div>
+            
             <div class="scene" v-show="error !== ''">
     			<p> {{ error }} </p>
     		</div>
@@ -46,8 +50,8 @@
                 </div>
                 <div class="recap-wrapper" v-show="reponse.id !== 0">
                     <div>
-                        <h3 v-show="reponse.display">{{reponse.text}}</h3>
                         <button v-on:click="display">{{reponse.button}}</button>
+                        <h3 v-show="reponse.display">{{reponse.text}}</h3>
                     </div>
                 </div>
             </div>

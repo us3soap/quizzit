@@ -7,6 +7,7 @@ var socket = io.connect(GLOBAL.url);
 new Vue({
     el: '#content',
     data: {
+        nomPage : 'Quizz IT !',
         loading : false,
         error : GLOBAL.error,
         room : GLOBAL.token,
@@ -22,7 +23,7 @@ new Vue({
         reponse : {
             id : 0,
             text : '',
-            button : "Afficher votre réponse",
+            button : 'Afficher',
             display : false
         },
         question: {}
@@ -36,8 +37,17 @@ new Vue({
         var that = this;
         
         socket.on('start-party-users-' + this.room, function (data) {
+            var _reponse = {
+                id : 0,
+                text : '',
+                button : 'Afficher',
+                display : false
+            };
+            
             that.question = data;
             that.state.step = 'game';
+            that.reponse = _reponse;
+            
         });
         
         socket.on('reload-party-' + this.room, function (data) {
@@ -75,7 +85,7 @@ new Vue({
         },
         display: function () {
             this.reponse.display = this.reponse.display ? false : true;
-            this.reponse.button = this.reponse.display ? "Dissimuler votre réponse" : "Afficher votre réponse";
+            this.reponse.button = this.reponse.display ? 'Dissimuler' : 'Afficher';
 
         },
         // reloadSameParty: function () {
