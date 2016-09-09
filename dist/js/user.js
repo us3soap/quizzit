@@ -21,7 +21,9 @@ new Vue({
         },
         reponse : {
             id : 0,
-            text : ''
+            text : '',
+            button : "Afficher votre réponse",
+            display : false
         },
         question: {}
     },
@@ -57,6 +59,25 @@ new Vue({
                 }
             });
         },
+        reply: function(id) {
+            
+            this.reponse.id = id;
+            this.reponse.text = this.question['reponse' + this.reponse.id];
+            
+            var _data = {
+                reponse: 'reponse' + this.reponse.id,
+                id: this.question.idquestion
+            };
+
+            socket.emit('recolte-reponse', _data, function (dataRetour) {
+                console.log(dataRetour);
+            });
+        },
+        display: function () {
+            this.reponse.display = this.reponse.display ? false : true;
+            this.reponse.button = this.reponse.display ? "Dissimuler votre réponse" : "Afficher votre réponse";
+
+        },
         // reloadSameParty: function () {
         //     socket.emit('reloadParty', { displayAdmin: false, pseudo: this.pseudo, room: GLOBAL.token}, function (data) {});
         // },
@@ -65,23 +86,7 @@ new Vue({
         //         document.location = "/admin/" + dataRetour['room'];
         //     });
         // },
-        // reponseOnclick: function (btnNo) {
-        //     this.reponseDonnee = btnNo;
-        //     this.reponseDonneeText = this.question['reponse' + btnNo];
-        //     this.showCommandTool = false;
-        //     this.showRecapReponse = true;
-        //     socket.emit('recolte-reponse', {
-        //         reponse: 'reponse' + btnNo,
-        //         id: this.props.question.idquestion
-        //     }, function (dataRetour) {
-        //         console.log(dataRetour);
-        //     });
-        // },
-        // afficherReponse: function (btnNo) {
-        //     $("#reponseChoisie").show();
-        // },
-        // cacherReponse: function (btnNo) {
-        //     $("#reponseChoisie").hide();
-        // }
+
+
     }
 });
