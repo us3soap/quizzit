@@ -51,6 +51,7 @@ new Vue({
         });
         
         socket.on('reload-party-' + this.room, function (data) {
+            console.log('reload-party', data);
             that.state.step = 'reload';
         });
         

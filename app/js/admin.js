@@ -1,6 +1,7 @@
 /* global Vue*/
 /* global io*/
 /* global $*/
+/* global document*/
 'use strict';
 var socket = io.connect(GLOBAL.url);
 new Vue({

@@ -40,13 +40,14 @@ module.exports = function(io) {
         // Socket permettant l'administration de la salle.
         socket.on('param-room', function (data, fn) {
             
-            console.log('socket.js', "Parametrage de la partie", data.room, ' : nbUsers =>', data.nbUsersMax , ', nbQuestions =>', data.nbQuestions, ', timer =>', data.timerQuestion );
+            console.log('socket.js', "Parametrage de la partie", data.room, ': nbUsers =>', data.nbUsersMax , ', nbQuestions =>', data.nbQuestions, ', timer =>', data.timerQuestion );
             
             var _room = room.getRoom(data["room"]);
             
             if(_room != false){
                 _room.setReady();
                 _room.open();
+                
                 //--Parametrage
                 _room.setMaxNbMembers(data.nbUsersMax);
                 _room.setMinNbMembers(data.nbUsersMax);
@@ -63,7 +64,6 @@ module.exports = function(io) {
                 
                 socket.broadcast.emit('create-room-'+data.room, _data);
                 
-                                                                        
                 fn({url: "/room/"+data["room"]});
             }else{
                 fn(false);
@@ -97,7 +97,6 @@ module.exports = function(io) {
                 fn(false);
                 
             }
-            
 
         });
     
@@ -138,6 +137,7 @@ module.exports = function(io) {
         
         //socket de deconnexion d'un joueur.
         socket.on('disconnect', function () {
+            
             if(room.getRoom(socket.room) != false){
                 room.getRoom(socket.room).memberLeave(socket.token);
     
@@ -147,6 +147,7 @@ module.exports = function(io) {
                     nbUsers : room.getRoom(socket.room).getMembers().length
                 });
             }
+            
         });
     });
 };
