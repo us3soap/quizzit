@@ -100,34 +100,9 @@ new Vue({
                     
                 }
             }
-        }),
-        
-        socket.on('reloading-room-' + GLOBAL.token, function(data) {
-            //that.displayInterface("parametrage");
         })
-        
-        
     },
     methods: {
-        /**
-        * Function permettant l'ajout d'un joueur.
-        * @arg String token : la clé référençant l'utilisateur.
-        * @arg String username : le nom d'utilisateur.
-        **/
-        addParticipants: function(token, username){
-            var players = "" ;//$players.querySelectorAll('.player');
-            for (var i = 0, l = players.length, player; i < l; i++) {
-                player = players[i];
-                if (!player.classList.contains('active')) {
-                    player.classList.add('active');
-                    player.querySelector('.pseudo').innerHTML = '<span id="name-' + token + '">' + username + '</span><span id="badge-' + token + '" class="badge badge-display">0</span>';
-                    player.id = token;
-                    break;
-                }
-            }
-        },
-             
-             
         /** 
          * Functions permettant de comptabiliser et recupérer les questions
          * + création du chrono
