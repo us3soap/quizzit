@@ -1,60 +1,81 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
     <head>
-        <meta charset="UTF-8">
-        <title>Quizzjs</title>
-        <link rel="stylesheet" href="./styles/dashboard.css">
+        <title>QuizzJS</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="./styles/dashboard.css">
     </head>
     <body>
-        <div class="content">
-            <div class="players">
+        <div id="content" class="content" style="display:none">
+            
+            <div class="scene" v-if="error !== ''">
+    			<p> {{ error }} </p>
+    		</div>
+    		
+            <div class="players" v-if="error === ''">
+                <div class="player" v-for="player in players">
+                    <div class="pseudo" v-if="player.username === 'attente'">attente</div>
+                    <div class="pseudo active" v-if="player.username !== 'attente'"><span id="name-{{player.token}}"> {{player.username}} </span><span id="badge-{{player.token}}" class="badge badge-display">0</span></div>
+                </div>
+            
                 <div class="canvas-wrapper">
                     <div class="timelaps-wheel"></div>
                     <canvas id="timelaps" width="100%" height="100%">mince, pas compatible avec cette écran ...</canvas>
                 </div>
             </div>
-            <div class="instruction">
-                Scanne ce QR Code pour parametrer la partie.
+            
+            <div class="instruction" v-if="error === '' && (state.step === 'waitParam' || state.step === 'waitPlayer' || state.step === 'waitPlay')">
+                {{instructions}}
             </div>
-            <div class="howto">
+            
+            <div class="howto" v-if="error === '' && (state.step === 'waitParam' || state.step === 'waitPlayer')">
                 <div class="picture">
                     <img src="images/hand-device.png">
                 </div>
                 <div class="qrcode">
-                    <img class="qrcode-img" src="/admin-room/<%=token%>" />
+                    <img class="qrcode-img" src="/{{pageQRCode}}/<%=token%>" />
                 </div>
             </div>
-            <div class="question-wrapper">
+            
+            <div class="question-wrapper" v-if="error === '' && state.step === 'game'">
                 <div class="question">
-                    <div></div>
+                    {{question.question}}
                 </div>
                 <div class="reponses">
-                    <div id="divreponse1" class="cacher">
-                        <span class="reponse-square square1"></span><div class="reponse" id="reponse1"></div>
+                    <div id="divreponse1">
+                        <span class="reponse-square square1"></span><div class="reponse" id="reponse1">{{question.reponse1}}</div>
                     </div>
-                    <div id="divreponse2" class="cacher">
-                        <span class="reponse-square square2"></span><div class="reponse" id="reponse2"></div>
+                    <div id="divreponse2">
+                        <span class="reponse-square square2"></span><div class="reponse" id="reponse2">{{question.reponse2}}</div>
                     </div>
-                    <div id="divreponse3" class="cacher">
-                        <span class="reponse-square square3"></span><div class="reponse" id="reponse3"></div>
+                    <div id="divreponse3">
+                        <span class="reponse-square square3"></span><div class="reponse" id="reponse3">{{question.reponse3}}</div>
                     </div>
-                    <div id="divreponse4" class="cacher">
-                        <span class="reponse-square square4"></span><div class="reponse" id="reponse4"></div>
+                    <div id="divreponse4">
+                        <span class="reponse-square square4"></span><div class="reponse" id="reponse4">{{question.reponse4}}</div>
                     </div>
                 </div>    
             </div>
-            <div class="scoring"></div>
+            
+            <div class="scoring"  v-if="error === '' && state.step === 'result'">
+                <div v-for="player in players">
+                    {{player.username}} -- {{player.points}} point(s)
+                </div>
+            </div>
+            
         </div>
         
         <script>
             var GLOBAL = {
                 url: '<%= url %>',
                 token: '<%= token %>',
-                ready2play: <%= ready2play %>
+                ready2play: <%= ready2play %>,
+                error: '<%= error %>',
             };
         </script>
+        
+        <script src="/bower_components/vue/dist/vue.min.js"></script>
         <script src="/bower_components/jquery/dist/jquery.min.js"></script>
-        <script src="/bower_components/vue/dist/vue.js"></script>
         <script src="/socket.io/socket.io.js"></script>
         <script src="/js/dashboard.js"></script>
         

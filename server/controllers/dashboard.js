@@ -11,7 +11,8 @@ module.exports = {
     
         res.render('dashboard.ejs', {url: req.headers.host,
                                 token: token,
-                                ready2play: myRoom.isReady()
+                                ready2play: myRoom.isReady(),
+                                error: null
         });
         
     },
