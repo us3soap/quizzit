@@ -34,20 +34,20 @@ new Vue({
         socket.on('new-user-' + GLOBAL.token, function(data) {
             that.players.push({token:data['usertoken'], username:data['user'],points:0}); //ajout d'un player
             that.players.splice(0,1);   //suppression d'un joueur "attente"
-        })
+        }),
         
         //socket création d'une partie avec les params que l'utilisateur a saisi.
         socket.on('create-room-' + GLOBAL.token, function(data) {
-            that.nbUsersMax = parseInt(data['nbUsersMax']);
-            that.nbQuestions = parseInt(data['nbQuestions']);
-            that.timerQuestion = parseInt(data['timerQuestion']);
+            that.nbUsersMax = parseInt(data.nbUsersMax);
+            that.nbQuestions = parseInt(data.nbQuestions);
+            that.timerQuestion = parseInt(data.timerQuestion);
 
             for (var i = 1; i <= that.nbUsersMax ; i++) {
                 that.players.push({token:'attente', username:'attente'});
             }
             that.pageQRCode = 'access-room';
             that.instructions = 'Scanne ce QR Code pour rejoindre la partie.';
-        })
+        }),
         
         //socket lancement d'un partie nombre de joueur suffisant
         socket.on('start-party-room-' + GLOBAL.token, function(user) {
@@ -66,7 +66,7 @@ new Vue({
                     that.eventQuestion = setInterval(that.myGame, ((that.timerQuestion * 1000) + that.tempsDeTransition) );
                 });
             }, 5000);
-        })
+        }),
         
         //socket mise a jour score après reponse d'un utilisateur
         socket.on('maj-party-users-' + GLOBAL.token, function(data) {
@@ -100,7 +100,7 @@ new Vue({
                     
                 }
             }
-        })
+        }),
         
         socket.on('reloading-room-' + GLOBAL.token, function(data) {
             //that.displayInterface("parametrage");
@@ -152,7 +152,6 @@ new Vue({
                     window.clearInterval(that.interval);
                     
                     // gestion du timer
-                    console.log('debut timer');
                     var $timelapsWrapper = document.querySelector('.canvas-wrapper'),
                         $timelaps = document.querySelector('#timelaps'),
                         timelapsCtx = $timelaps.getContext("2d");
@@ -166,7 +165,7 @@ new Vue({
                         y = 0;
                         
                     var angle = -90;
-                    var totalTime = GLOBAL.timerQuestion * 1000; //ms
+                    var totalTime = that.timerQuestion * 1000; //ms
                     var tickInterval = 250;
                     var step = tickInterval * 360 / totalTime;
                     var tick = 0;
@@ -180,6 +179,7 @@ new Vue({
                     timelapsCtx.clearRect(0, 0, timelapsW, timelapsH);
                     
                     that.interval = window.setInterval(function () {
+                        console.log('tick');
                         nextStep = angle + step;
                         
                         while(angle < nextStep){
@@ -196,10 +196,9 @@ new Vue({
                         if (tick >= totalTime) {
                             console.log('stop tick ' + (tick/1000) + 's');
                             window.clearInterval(that.interval);
-                            this.state.step = 'result';
+                            that.state.step = 'result';
                         }
                     }, tickInterval);
-                    console.log('fin timer');
                 });
             }
         }
