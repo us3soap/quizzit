@@ -15,7 +15,7 @@
             <div class="players" v-if="error === ''">
                 <div v-for="player in players">
                     <div class="player" v-if="player.username === 'attente'">
-                        <div class="pseudo">attente</div>
+                        <div class="pseudo">{{player.username}}</div>
                     </div>
                     <div class="player active" v-if="player.username !== 'attente'">
                         <div class="pseudo"><span id="name-{{player.token}}"> {{player.username}} </span><span id="badge-{{player.token}}" class="badge badge-display">0</span></div>
@@ -41,29 +41,32 @@
                 </div>
             </div>
             
-            <div class="question-wrapper" v-if="error === '' && state.step === 'game'">
+            <div class="question-wrapper" v-if="error === '' && (state.step === 'game' || state.step === 'result')">
                 <div class="question">
                     {{question.question}}
                 </div>
                 <div class="reponses">
-                    <div id="divreponse1">
+                    <div id="divreponse1" v-show="affichageReponse1" transition="removed">
                         <span class="reponse-square square1"></span><div class="reponse" id="reponse1">{{question.reponse1}}</div>
                     </div>
-                    <div id="divreponse2">
+                    <div id="divreponse2" v-show="affichageReponse2" transition="removed">
                         <span class="reponse-square square2"></span><div class="reponse" id="reponse2">{{question.reponse2}}</div>
                     </div>
-                    <div id="divreponse3">
+                    <div id="divreponse3" v-show="affichageReponse3" transition="removed">
                         <span class="reponse-square square3"></span><div class="reponse" id="reponse3">{{question.reponse3}}</div>
                     </div>
-                    <div id="divreponse4">
+                    <div id="divreponse4" v-show="affichageReponse4" transition="removed">
                         <span class="reponse-square square4"></span><div class="reponse" id="reponse4">{{question.reponse4}}</div>
                     </div>
                 </div>    
             </div>
             
-            <div class="scoring"  v-if="error === '' && state.step === 'result'">
-                <div v-for="player in players">
+            <div class="scoring"  v-if="error === '' && state.step === 'resulte'">
+                <div v-for="player in players" v-if="state.result === 'score' && cptQuestion | mod 5 === 0">
                     {{player.username}} -- {{player.points}} point(s)
+                </div>
+                <div  v-if="state.result === 'reponse'">
+                    <!--ajout animation sur les reponses fausses.-->
                 </div>
             </div>
             

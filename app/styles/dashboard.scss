@@ -291,7 +291,11 @@ progress::-webkit-progress-bar{
     display:none;
 }
 
-.removed {
+.removed-transition {
+    display: inline-block;
+}
+    
+.removed-leave {
     -webkit-animation: disapear 1s;
     -webkit-animation-fill-mode: forwards; 
     animation: disapear 1s;
@@ -321,7 +325,7 @@ progress::-webkit-progress-bar{
     }    
 }
 
-.adding {
+.removed-enter {
     -webkit-animation: apear 1s;
     -webkit-animation-fill-mode: forwards; 
     animation: apear 1s;

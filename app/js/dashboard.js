@@ -8,24 +8,32 @@ new Vue({
     el: '#content',
     data: {
         error : GLOBAL.error,
-        players : [],
+        players : [], //tableau des joueurs (token, username, points)
         nbUsersMax : '',
         nbQuestions : '',
-        pageQRCode :  '',
+        pageQRCode :  '', //lien du QRcode (page admin-room ou room)
         timerQuestion : '',
-        tempsDeTransition : 6000,
-        instructions : 'Scanne ce QR Code pour parametrer la partie.',
+        affichageReponse1 : true, //gestion de l'animation pour afficher la bonne reponse
+        affichageReponse2 : true,
+        affichageReponse3 : true,
+        affichageReponse4 : true,
+        tempsDeTransition : 6000, //temps entre affichage de la réponse et debut de la question suivante
+        instructions : '', //Instructions afficher sur la page dashboard
         state: {
             loading : false,
-            step : '' //waitParam, waitPlayer, waitGame, game, result
+            step : '', //waitParam, waitPlayer, waitGame, game, result
+            result : ''
         },
-        question: {}
+        question: {} //tableau des questions (idquestion, question, reponse1, reponse2, reponse3, reponse4, good, explication)
     },
     ready: function() {
         
         this.pageQRCode = 'admin-room';
         this.state.loading = true;
         this.state.step = 'waitParam';
+        //this.state.result = 'reponse';
+        this.state.result = 'score';
+        this.instructions = 'Scanne ce QR Code pour parametrer la partie.',
         $('#content').show();
         
         var that = this;
@@ -86,6 +94,7 @@ new Vue({
                 window.clearInterval(that.eventQuestion);
                 window.clearInterval(that.interval);
                 that.state.step = 'result';
+                that.animationReponses(that.question.good);
                 
                 //relance question dans 6 secondes (après le recap des scores)
                 if (that.cptQuestion < that.nbQuestions) {
@@ -123,6 +132,8 @@ new Vue({
     
                     that.question = data;
                     that.state.step = 'game';
+                    
+                    that.animationReponses('');
                     
                     window.clearInterval(that.interval);
                     
@@ -172,9 +183,41 @@ new Vue({
                             console.log('stop tick ' + (tick/1000) + 's');
                             window.clearInterval(that.interval);
                             that.state.step = 'result';
+                            that.animationReponses(that.question.good);
                         }
                     }, tickInterval);
                 });
+            }
+        },
+        
+        /**
+         * Function gérant l'animation des réponses.
+         * @arg nomClass classe css a ajouter aux réponses
+         * @arg bonneReponse div reponse qui ne doit pas prendre la classe css
+         **/
+        animationReponses : function (bonneReponse){
+            
+            if (bonneReponse == "reponse1") {
+                this.affichageReponse2 =  false;
+                this.affichageReponse3 =  false;
+                this.affichageReponse4 =  false;
+            } else if (bonneReponse == "reponse2") {
+                this.affichageReponse1 =  false;
+                this.affichageReponse3 =  false;
+                this.affichageReponse4 =  false;
+            } else if (bonneReponse == "reponse3") {
+                this.affichageReponse2 =  false;
+                this.affichageReponse1 =  false;
+                this.affichageReponse4 =  false;
+            } else if (bonneReponse == "reponse4") {
+                this.affichageReponse2 =  false;
+                this.affichageReponse3 =  false;
+                this.affichageReponse1 =  false;
+            } else {
+                this.affichageReponse1 =  true;
+                this.affichageReponse2 =  true;
+                this.affichageReponse3 =  true;
+                this.affichageReponse4 =  true;
             }
         }
     }
