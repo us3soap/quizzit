@@ -21,8 +21,7 @@ new Vue({
         instructions : '', //Instructions afficher sur la page dashboard
         state: {
             loading : false,
-            step : '', //waitParam, waitPlayer, waitGame, game, result
-            result : ''
+            step : '' //waitParam, waitPlayer, waitGame, game, result
         },
         question: {} //tableau des questions (idquestion, question, reponse1, reponse2, reponse3, reponse4, good, explication)
     },
@@ -31,8 +30,7 @@ new Vue({
         this.pageQRCode = 'admin-room';
         this.state.loading = true;
         this.state.step = 'waitParam';
-        //this.state.result = 'reponse';
-        this.state.result = 'score';
+
         this.instructions = 'Scanne ce QR Code pour parametrer la partie.',
         $('#content').show();
         
@@ -93,7 +91,7 @@ new Vue({
             if (that.nbUsersMax==that.nbReponseRecu) {
                 window.clearInterval(that.eventQuestion);
                 window.clearInterval(that.interval);
-                that.state.step = 'result';
+
                 that.animationReponses(that.question.good);
                 
                 //relance question dans 6 secondes (après le recap des scores)
@@ -121,7 +119,7 @@ new Vue({
             var that = this;
             if (this.cptQuestion == this.nbQuestions) {
                 clearInterval(this.eventQuestion);
-                this.state.step = 'result';
+
                 setTimeout (function(){
                     socket.emit('display-reload-party', {room : GLOBAL.token}, function (data) {});
                 },3000);
@@ -182,7 +180,7 @@ new Vue({
                         if (tick >= totalTime) {
                             console.log('stop tick ' + (tick/1000) + 's');
                             window.clearInterval(that.interval);
-                            that.state.step = 'result';
+
                             that.animationReponses(that.question.good);
                         }
                     }, tickInterval);

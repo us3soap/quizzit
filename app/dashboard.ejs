@@ -61,12 +61,9 @@
                 </div>    
             </div>
             
-            <div class="scoring"  v-if="error === '' && state.step === 'resulte'">
-                <div v-for="player in players" v-if="state.result === 'score' && cptQuestion | mod 5 === 0">
+            <div class="scoring"  v-if="error === '' && state.step === 'result'">
+                <div v-for="player in players">
                     {{player.username}} -- {{player.points}} point(s)
-                </div>
-                <div  v-if="state.result === 'reponse'">
-                    <!--ajout animation sur les reponses fausses.-->
                 </div>
             </div>
             
