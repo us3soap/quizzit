@@ -13,12 +13,14 @@ new Vue({
         nbQuestions : '',
         pageQRCode :  '', //lien du QRcode (page admin-room ou room)
         timerQuestion : '',
+        affichageScore : false,
         affichageReponse1 : true, //gestion de l'animation pour afficher la bonne reponse
         affichageReponse2 : true,
         affichageReponse3 : true,
         affichageReponse4 : true,
-        tempsDeTransition : 6000, //temps entre affichage de la réponse et debut de la question suivante
+        tempsDeTransition : 8000, //temps entre affichage de la réponse et debut de la question suivante
         instructions : '', //Instructions afficher sur la page dashboard
+        eventQuestion : '',
         state: {
             loading : false,
             step : '' //waitParam, waitPlayer, waitGame, game, result
@@ -61,15 +63,15 @@ new Vue({
             that.state.step = 'waitPlay';
             that.instructions = 'Tout le monde est la. Préparez vous !';
             
-            setTimeout (function(){
+            window.setTimeout (function(){
                 socket.emit('start', {room : GLOBAL.token}, function (data) {
-                    console.log("start OK");
+                    console.log("Démarrage partie");
                     that.cptQuestion = 0;
                     //Je lance ma fonction en même temps que l'event
                     //car la première itération de mon event se fait au bon de 10 sec.
                     that.myGame();
                     //ici, une question durera xx secondes, paramétré par l'utilisateur, 10 secondes par défaut.
-                    that.eventQuestion = setInterval(that.myGame, ((that.timerQuestion * 1000) + that.tempsDeTransition) );
+                    that.eventQuestion = window.setInterval(that.myGame, ((that.timerQuestion * 1000) + that.tempsDeTransition) );
                 });
             }, 5000);
         }),
@@ -77,14 +79,12 @@ new Vue({
         //socket mise a jour score après reponse d'un utilisateur
         socket.on('maj-party-users-' + GLOBAL.token, function(data) {
             for (var i = 0; i < that.nbUsersMax ; i++) {
-                console.log(that.players[i].token + ' == ' + data['usertoken'] + ' ?')
                 if (that.players[i].token == data['usertoken']) {
                     that.players[i].points = that.players[i].points + parseInt(data['nbPoint']);
                 }
             }
             
-            console.log('maj-party-users');
-            console.log(data);
+            console.log('maj-party-users', data);
             
             that.nbReponseRecu++;
             //si tout le monde a repondu alors transition et on passe à la question suivante.
@@ -96,14 +96,17 @@ new Vue({
                 
                 //relance question dans 6 secondes (après le recap des scores)
                 if (that.cptQuestion < that.nbQuestions) {
-                    setTimeout (function(){
+                    window.setTimeout (function(){
                         that.myGame();
-                        that.eventQuestion = setInterval(that.myGame, ((that.timerQuestion * 1000) + that.tempsDeTransition ) );
+                        that.eventQuestion = window.setInterval(that.myGame, ((that.timerQuestion * 1000) + that.tempsDeTransition ) );
                     },that.tempsDeTransition);
                 } else {
-                    setTimeout (function(){
-                        socket.emit('display-reload-party', {room : GLOBAL.token}, function (data) {});
-                    },3000);
+                    window.setTimeout (function(){
+                        that.state.step = 'result';
+                        window.setTimeout (function(){
+                            socket.emit('display-reload-party', {room : GLOBAL.token}, function (data) {});
+                        },3000);
+                    },that.tempsDeTransition);
                     
                 }
             }
@@ -117,17 +120,33 @@ new Vue({
         myGame: function() {
             
             var that = this;
+            
             if (this.cptQuestion == this.nbQuestions) {
-                clearInterval(this.eventQuestion);
-
-                setTimeout (function(){
+                window.clearInterval(this.eventQuestion);
+                this.state.step = 'result';
+                
+                window.setTimeout (function(){
                     socket.emit('display-reload-party', {room : GLOBAL.token}, function (data) {});
                 },3000);
+            } else if (this.cptQuestion % 5 == 0 && this.affichageScore) {
+                window.clearInterval(this.eventQuestion);
+                this.affichageScore = false;
+                this.state.step = 'result';
+                window.setTimeout (function(){
+                    that.myGame();
+                    //ici, une question durera xx secondes, paramétré par l'utilisateur, 10 secondes par défaut.
+                    that.eventQuestion = window.setInterval(that.myGame, ((that.timerQuestion * 1000) + that.tempsDeTransition) );
+                },5000);
             } else {
                 socket.emit('recup-question', {room : GLOBAL.token}, function (data) {
+                    
+                    that.affichageScore =true;
+                    
                     that.nbReponseRecu = 0;
                     that.cptQuestion = that.cptQuestion + 1;
-    
+                    
+                    console.log('affichage question', that.cptQuestion);
+                    
                     that.question = data;
                     that.state.step = 'game';
                     
@@ -163,7 +182,6 @@ new Vue({
                     timelapsCtx.clearRect(0, 0, timelapsW, timelapsH);
                     
                     that.interval = window.setInterval(function () {
-                        console.log('tick');
                         nextStep = angle + step;
                         
                         while(angle < nextStep){
@@ -178,7 +196,7 @@ new Vue({
                         
                         tick += tickInterval;
                         if (tick >= totalTime) {
-                            console.log('stop tick ' + (tick/1000) + 's');
+                            console.log('stop temps de reponse ' + (tick/1000) + 's');
                             window.clearInterval(that.interval);
 
                             that.animationReponses(that.question.good);

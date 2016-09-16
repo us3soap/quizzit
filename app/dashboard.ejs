@@ -41,7 +41,7 @@
                 </div>
             </div>
             
-            <div class="question-wrapper" v-if="error === '' && (state.step === 'game' || state.step === 'result')">
+            <div class="question-wrapper" v-if="error === '' && state.step === 'game'">
                 <div class="question">
                     {{question.question}}
                 </div>
@@ -62,6 +62,7 @@
             </div>
             
             <div class="scoring"  v-if="error === '' && state.step === 'result'">
+                Affichage des scores :
                 <div v-for="player in players">
                     {{player.username}} -- {{player.points}} point(s)
                 </div>
