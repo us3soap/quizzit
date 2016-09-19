@@ -3,36 +3,36 @@
     <head>
         <title>QuizzJS</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link rel="stylesheet" href="./styles/dashboard.css">
+        <link rel="stylesheet" href="./styles/dashboard.css">
     </head>
     <body>
         <div id="content" class="content" style="display:none">
             
-            <div class="scene" v-if="error !== ''">
+            <div class="scene" v-show="error !== ''">
     			<p> {{ error }} </p>
     		</div>
     		
-            <div class="players" v-if="error === ''">
+            <div class="players" v-show="error === ''">
                 <div v-for="player in players">
-                    <div class="player" v-if="player.username === 'attente'">
+                    <div class="player" v-show="player.username === 'attente'">
                         <div class="pseudo">{{player.username}}</div>
                     </div>
-                    <div class="player active" v-if="player.username !== 'attente'">
+                    <div class="player active" v-show="player.username !== 'attente'">
                         <div class="pseudo"><span id="name-{{player.token}}"> {{player.username}} </span><span id="badge-{{player.token}}" class="badge badge-display">0</span></div>
                     </div>
                 </div>
                 
                 <div class="canvas-wrapper">
                     <div class="timelaps-wheel"></div>
-                    <canvas id="timelaps" width="100%" height="100%">mince, pas compatible avec cette écran ...</canvas>
+                    <canvas id="timelaps" width="100%" height="100%">mince, pas compatible avec cet écran ...</canvas>
                 </div>
             </div>
             
-            <div class="instruction" v-if="error === '' && (state.step === 'waitParam' || state.step === 'waitPlayer' || state.step === 'waitPlay')">
+            <div class="instruction" v-show="error === '' && (state.step === 'waitParam' || state.step === 'waitPlayer' || state.step === 'waitPlay')">
                 {{instructions}}
             </div>
             
-            <div class="howto" v-if="error === '' && (state.step === 'waitParam' || state.step === 'waitPlayer')">
+            <div class="howto" v-show="error === '' && (state.step === 'waitParam' || state.step === 'waitPlayer')">
                 <div class="picture">
                     <img src="images/hand-device.png">
                 </div>
@@ -41,7 +41,7 @@
                 </div>
             </div>
             
-            <div class="question-wrapper" v-if="error === '' && state.step === 'game'">
+            <div class="question-wrapper" v-show="error === '' && state.step === 'game'">
                 <div class="question">
                     {{question.question}}
                 </div>
@@ -61,7 +61,7 @@
                 </div>    
             </div>
             
-            <div class="scoring"  v-if="error === '' && state.step === 'result'">
+            <div class="scoring"  v-show="error === '' && state.step === 'result'">
                 Affichage des scores :
                 <div v-for="player in players">
                     {{player.username}} -- {{player.points}} point(s)

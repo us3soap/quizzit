@@ -123,6 +123,7 @@ new Vue({
             
             if (this.cptQuestion == this.nbQuestions) {
                 window.clearInterval(this.eventQuestion);
+                window.clearInterval(that.eventQuestion);
                 this.state.step = 'result';
                 
                 window.setTimeout (function(){
@@ -154,54 +155,7 @@ new Vue({
                     
                     window.clearInterval(that.interval);
                     
-                    // gestion du timer
-                    var $timelapsWrapper = document.querySelector('.canvas-wrapper'),
-                        $timelaps = document.querySelector('#timelaps'),
-                        timelapsCtx = $timelaps.getContext("2d");
-                
-                    var timelapsH = $timelapsWrapper.offsetHeight,
-                        timelapsW = $timelapsWrapper.offsetWidth,
-                        timelapsCenter = timelapsW / 2;
-        
-                    var r = timelapsW/2,
-                        x = 0,
-                        y = 0;
-                        
-                    var angle = -90;
-                    var totalTime = that.timerQuestion * 1000; //ms
-                    var tickInterval = 250;
-                    var step = tickInterval * 360 / totalTime;
-                    var tick = 0;
-                    var nextStep = 0;
-                    
-                    timelapsCtx.strokeStyle = "rgb(106, 150, 241)";
-                    timelapsCtx.lineWidth = 1;
-                    timelapsCtx.beginPath();
-                    angle = -90;
-                    tick = 0;
-                    timelapsCtx.clearRect(0, 0, timelapsW, timelapsH);
-                    
-                    that.interval = window.setInterval(function () {
-                        nextStep = angle + step;
-                        
-                        while(angle < nextStep){
-                            x = r + r*Math.cos(angle*(Math.PI/180));
-                            y = r + r*Math.sin(angle*(Math.PI/180));
-                            
-                            timelapsCtx.moveTo(timelapsW/2, timelapsH/2);
-                            timelapsCtx.lineTo(x,y);
-                            timelapsCtx.stroke();
-                            angle++;
-                        }
-                        
-                        tick += tickInterval;
-                        if (tick >= totalTime) {
-                            console.log('stop temps de reponse ' + (tick/1000) + 's');
-                            window.clearInterval(that.interval);
-
-                            that.animationReponses(that.question.good);
-                        }
-                    }, tickInterval);
+                    that.gererTimer();
                 });
             }
         },
@@ -235,6 +189,57 @@ new Vue({
                 this.affichageReponse3 =  true;
                 this.affichageReponse4 =  true;
             }
+        },
+        
+        gererTimer : function () {
+            // gestion du timer
+            var $timelapsWrapper = document.querySelector('.canvas-wrapper'),
+                $timelaps = document.querySelector('#timelaps'),
+                timelapsCtx = $timelaps.getContext("2d");
+        
+            var timelapsH = $timelapsWrapper.offsetHeight,
+                timelapsW = $timelapsWrapper.offsetWidth,
+                timelapsCenter = timelapsW / 2;
+
+            var r = timelapsW/2,
+                x = 0,
+                y = 0;
+                
+            var angle = -90;
+            var totalTime = this.timerQuestion * 1000; //ms
+            var tickInterval = 250;
+            var step = tickInterval * 360 / totalTime;
+            var tick = 0;
+            var nextStep = 0;
+            
+            timelapsCtx.strokeStyle = "rgb(106, 150, 241)";
+            timelapsCtx.lineWidth = 1;
+            timelapsCtx.beginPath();
+            angle = -90;
+            tick = 0;
+            timelapsCtx.clearRect(0, 0, timelapsW, timelapsH);
+            
+            this.interval = window.setInterval(function () {
+                nextStep = angle + step;
+                
+                while(angle < nextStep){
+                    x = r + r*Math.cos(angle*(Math.PI/180));
+                    y = r + r*Math.sin(angle*(Math.PI/180));
+                    
+                    timelapsCtx.moveTo(timelapsW/2, timelapsH/2);
+                    timelapsCtx.lineTo(x,y);
+                    timelapsCtx.stroke();
+                    angle++;
+                }
+                
+                tick += tickInterval;
+                if (tick >= totalTime) {
+                    console.log('stop temps de reponse ' + (tick/1000) + 's');
+                    window.clearInterval(this.interval);
+
+                    this.animationReponses(this.question.good);
+                }
+            }, tickInterval);
         }
     }
 });
