@@ -4,7 +4,7 @@
 'use strict';
 var socket = io.connect(GLOBAL.url);
 
-new Vue({
+var test = new Vue({
     el: '#content',
     data: {
         error : GLOBAL.error,
@@ -63,15 +63,16 @@ new Vue({
             that.state.step = 'waitPlay';
             that.instructions = 'Tout le monde est la. Préparez vous !';
             
-            window.setTimeout (function(){
+            setTimeout (function(){
                 socket.emit('start', {room : GLOBAL.token}, function (data) {
                     console.log("Démarrage partie");
                     that.cptQuestion = 0;
+                    
+                    //ici, une question durera xx secondes, paramétré par l'utilisateur, 10 secondes par défaut.
+                    that.lancerIntervalQuestion();
                     //Je lance ma fonction en même temps que l'event
                     //car la première itération de mon event se fait au bon de 10 sec.
                     that.myGame();
-                    //ici, une question durera xx secondes, paramétré par l'utilisateur, 10 secondes par défaut.
-                    that.eventQuestion = window.setInterval(that.myGame, ((that.timerQuestion * 1000) + that.tempsDeTransition) );
                 });
             }, 5000);
         }),
@@ -89,21 +90,21 @@ new Vue({
             that.nbReponseRecu++;
             //si tout le monde a repondu alors transition et on passe à la question suivante.
             if (that.nbUsersMax==that.nbReponseRecu) {
-                window.clearInterval(that.eventQuestion);
-                window.clearInterval(that.interval);
-
+                that.arreterIntervalQuestion();
+                clearInterval(that.interval);
+                
                 that.animationReponses(that.question.good);
                 
                 //relance question dans 6 secondes (après le recap des scores)
                 if (that.cptQuestion < that.nbQuestions) {
-                    window.setTimeout (function(){
+                    setTimeout (function(){
+                        that.lancerIntervalQuestion();
                         that.myGame();
-                        that.eventQuestion = window.setInterval(that.myGame, ((that.timerQuestion * 1000) + that.tempsDeTransition ) );
                     },that.tempsDeTransition);
                 } else {
-                    window.setTimeout (function(){
+                    setTimeout (function(){
                         that.state.step = 'result';
-                        window.setTimeout (function(){
+                        setTimeout (function(){
                             socket.emit('display-reload-party', {room : GLOBAL.token}, function (data) {});
                         },3000);
                     },that.tempsDeTransition);
@@ -118,25 +119,24 @@ new Vue({
          * + création du chrono
          **/
         myGame: function() {
-            
+            console.log('passage dans myGame');
             var that = this;
             
             if (this.cptQuestion == this.nbQuestions) {
-                window.clearInterval(this.eventQuestion);
-                window.clearInterval(that.eventQuestion);
+                this.arreterIntervalQuestion();
                 this.state.step = 'result';
                 
-                window.setTimeout (function(){
+                setTimeout (function(){
                     socket.emit('display-reload-party', {room : GLOBAL.token}, function (data) {});
                 },3000);
             } else if (this.cptQuestion % 5 == 0 && this.affichageScore) {
-                window.clearInterval(this.eventQuestion);
+                this.arreterIntervalQuestion();
                 this.affichageScore = false;
                 this.state.step = 'result';
-                window.setTimeout (function(){
-                    that.myGame();
+                setTimeout (function(){
                     //ici, une question durera xx secondes, paramétré par l'utilisateur, 10 secondes par défaut.
-                    that.eventQuestion = window.setInterval(that.myGame, ((that.timerQuestion * 1000) + that.tempsDeTransition) );
+                    that.lancerIntervalQuestion();
+                    that.myGame();
                 },5000);
             } else {
                 socket.emit('recup-question', {room : GLOBAL.token}, function (data) {
@@ -153,7 +153,7 @@ new Vue({
                     
                     that.animationReponses('');
                     
-                    window.clearInterval(that.interval);
+                    clearInterval(that.interval);
                     
                     that.gererTimer();
                 });
@@ -218,8 +218,8 @@ new Vue({
             angle = -90;
             tick = 0;
             timelapsCtx.clearRect(0, 0, timelapsW, timelapsH);
-            
-            this.interval = window.setInterval(function () {
+            var that = this;
+            this.interval = setInterval(function () {
                 nextStep = angle + step;
                 
                 while(angle < nextStep){
@@ -235,11 +235,19 @@ new Vue({
                 tick += tickInterval;
                 if (tick >= totalTime) {
                     console.log('stop temps de reponse ' + (tick/1000) + 's');
-                    window.clearInterval(this.interval);
+                    clearInterval(that.interval);
 
-                    this.animationReponses(this.question.good);
+                    that.animationReponses(that.question.good);
                 }
             }, tickInterval);
+        },
+        
+        lancerIntervalQuestion : function () {
+            test.eventQuestion = setInterval(this.myGame, ((this.timerQuestion * 1000) + this.tempsDeTransition) );
+        },
+        
+        arreterIntervalQuestion : function () {
+            clearInterval(test.eventQuestion);
         }
     }
 });
