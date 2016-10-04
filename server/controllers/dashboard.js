@@ -16,4 +16,23 @@ module.exports = {
         });
         
     },
+    
+    getRoom: function(req, res) {
+        var myRoom = room.getRoom(req.params.token);
+        if(myRoom){
+            res.render('dashboard.ejs', {url: req.headers.host,
+                                token: req.params.token,
+                                ready2play: myRoom.isReady(),
+                                error: null
+            });    
+        } else {
+            res.render('dashboard.ejs', {url: req.headers.host,
+                                token: req.params.token,
+                                ready2play: false,
+                                error: 'La salle demandée est introuvable'
+         });
+        }
+
+        
+    }
 };

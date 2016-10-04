@@ -15,7 +15,7 @@ new Vue({
     methods: {
         go : function() {
             if(this.room !== ''){
-                document.location = "/room/" + this.room;
+                document.location = '/room/' + this.room;
             }
         }
     }

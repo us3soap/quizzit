@@ -4,10 +4,15 @@ module.exports = function(router) {
     var qrcodeController = require('../controllers/qrcode');
     var adminController = require('../controllers/admin');
     var userController = require('../controllers/user');
+    var privateController = require('../controllers/private');
 
     /** Home page.
     **/
     router.get('/', dashboardController.createRoom);
+    
+    /** Home page parametré.
+    **/
+    router.get('/display/:token', dashboardController.getRoom);
 
     /** Génération du flux correspondant à l'image du QR Code pour rejoindre une partie paramétrée
     *   L'image générée est à afficher pour rejoindre la room.
@@ -30,4 +35,8 @@ module.exports = function(router) {
     /** Access page
     **/
     router.get('/access', userController.askRoom);
+    
+    /** Page de paramétrage pour créer une room spécifique. 
+    **/
+    router.get('/private', privateController.getView);
 };
