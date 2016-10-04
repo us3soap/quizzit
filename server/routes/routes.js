@@ -36,7 +36,11 @@ module.exports = function(router) {
     **/
     router.get('/access', userController.askRoom);
     
+    /** Page de paramétrage pour login. 
+    **/
+    router.get('/private/login', privateController.getLogin);
+    
     /** Page de paramétrage pour créer une room spécifique. 
     **/
-    router.get('/private', privateController.getView);
+    router.get('/private/view', privateController.getView);
 };

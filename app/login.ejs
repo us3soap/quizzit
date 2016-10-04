@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="/styles/login.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	<div id="content" class="content" style="display:none">
+		<div class="login-wrapper">
+			<div class="header">Login</div>
+			<div class="sso-wrapper">
+				<fieldset>
+					<legend>Sign with</legend>
+					<a href="#" class="button btn-social facebook span-left btn-block">
+                      <span>
+                        <i class="fa fa-facebook"></i>
+                      </span>Facebook
+                    </a>
+                    <a href="#" class="button btn-social twitter span-left btn-block">
+                      <span>
+                        <i class="fa fa-twitter"></i>
+                      </span>Twitter
+                    </a>
+                    <a href="#" class="button btn-social google span-left btn-block">
+                      <span>
+                        <i class="fa fa-google-plus"></i>
+                      </span>Google+
+                    </a>
+					
+				</fieldset>
+				
+				<fieldset>
+					<legend>Or login</legend>
+					<div class="col-md-6">
+                          
+
+                          <div class="section">
+                            <label for="username" class="field prepend-icon">
+                              <input type="text" name="username" id="username" class="gui-input" placeholder="Enter username">
+                              <label for="username" class="field-icon">
+                                <i class="fa fa-user"></i>
+                              </label>
+                            </label>
+                          </div>
+
+                          <div class="section">
+                            <label for="password" class="field prepend-icon">
+                              <input type="text" name="password" id="password" class="gui-input" placeholder="Enter password">
+                              <label for="password" class="field-icon">
+                                <i class="fa fa-lock"></i>
+                              </label>
+                            </label>
+                          </div>
+
+                          <div class="section">
+                            <label class="switch block">
+                              <input type="checkbox" name="remember2" id="remember2" checked="">
+                              <label for="remember2" data-on="YES" data-off="NO"></label>
+                              <span>Remember me</span>
+                            </label>
+                          </div>
+
+                        </div>
+					
+				</fieldset>
+				
+				
+			</div>
+			<div class="panel-footer">
+                 <button type="submit" class="button btn-primary">Sign in</button>
+            </div>
+		</div>
+      
+	</div>
+	
+	<script src="/bower_components/vue/dist/vue.min.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/js/login.js"></script>
+</body>
+</html>

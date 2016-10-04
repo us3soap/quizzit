@@ -1,7 +1,10 @@
 module.exports = {
     
+    getLogin: function(req, res) {
+        res.render('login.ejs', {});
+    },
+    
     getView: function(req, res) {
-        console.log('private.js', 'accès page paramétrage');
         res.render('private.ejs', {});
     }
     
