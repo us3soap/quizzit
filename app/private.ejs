@@ -7,27 +7,27 @@
 </head>
 
 <body>
-	<div id="content" class="content" style="display:none">
+	<div id="content" class="content" style="display:none;">
 	    <div class="header">
 	       <div class="navbar-branding">
-            <a class="navbar-brand" href="#dashboard">
+            <a v-on:click="navigate" class="navbar-brand" href="#dashboard">
                 Quizz<b>It !</b>
             </a>
           </div>
           <div class="navbar-right">
-              <button><i class="fa fa-sign-out" aria-hidden="true"></i></button>
+              <button v-on:click="disconnect"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
           </div>
 	    </div>
 	    <div class="body">
 	        <nav class="menu">
 	            <div class="user-wrapper">
-                    <div class="media-author"><i class="fa fa-user" aria-hidden="true"></i> John Do.</div>
+                    <div class="media-author"><i class="fa fa-user" aria-hidden="true"></i> {{user.firstname}} {{user.name}}</div>
                 </div>
                 
                 <ul class="nav">
                     <li class="sidebar-label pt20">Mon espace</li>
                     <li>
-                        <a href="#dashboard">
+                        <a v-on:click="navigate" href="#dashboard">
                           <span class="fa fa-users"></span>
                           <span class="sidebar-title">Mes salles</span>
                           <span class="sidebar-title-tray">
@@ -36,63 +36,67 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#export">
+                        <a v-on:click="navigate" href="#export">
                           <span class="fa fa-download"></span>
                           <span class="sidebar-title">Export de données</span>
 
                         </a>
                     </li>
                     <li>
-                        <a href="#stats">
+                        <a v-on:click="navigate" href="#stats">
                           <span class="fa fa-pie-chart"></span>
                           <span class="sidebar-title">Statistiques</span>
                         </a>
                     </li>
                     <li class="sidebar-label pt20">Mon compte</li>
                     <li>
-                        <a href="#user">
+                        <a v-on:click="navigate" href="#user">
                           <span class="fa fa-user"></span>
                           <span class="sidebar-title">Mes données personnelles</span>
 
                         </a>
                     </li>
                     <li>
-                        <a href="#account">
+                        <a v-on:click="navigate" href="#account">
                           <span class="fa fa-credit-card"></span>
                           <span class="sidebar-title">Ma facturation</span>
                         </a>
                     </li>
                 </ul>
 	        </nav>
-	        <div class="dashboard">
+	        <div id="app" class="dashboard">
 	           <div class="tracker">
                     <h2>Mon dashboard</h2>
 	           </div>
 	           <div class="content">
-	               <div class="card">
-                    <div class="card-body">
-                      <h1>lorem ipsum</h1>
-                      <a href="#room-AZER">Accéder à la salle</a>
+	               <div class="rooms-wrapper" >
+    	               <div class="card">
+                        <div class="card-body">
+                          <h1>lorem ipsum</h1>
+                          <a href="#room-AZER">Accéder à la salle</a>
+                        </div>
+                        <div class="card-footer">
+                          <span>
+                            <i class="fa fa-calendar" aria-hidden="true"></i> Actif du <b>01/05/2016</b> au <b>01/05/2017</b>
+                          </span>
+                        </div>
+                      </div>
+    	              
+    	              <div class="card card-dashed">
+                        <div class="card-body">
+                          <i class="fa fa-plus-circle"></i>
+                        </div>
+                        <div class="card-footer">
+                          <span>
+                            <a href="#new">Créer une nouvelle salle</a>
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                    <div class="card-footer">
-                      <span>
-                        <i class="fa fa-calendar" aria-hidden="true"></i> Actif du <b>01/05/2016</b> au <b>01/05/2017</b>
-                      </span>
-                    </div>
-                  </div>
-	              
-	              <div class="card">
-                    <div class="card-body">
-                      <i class="fa fa-plus-circle"></i>
-                    </div>
-                    <div class="card-footer">
-                      <span>
-                        <a href="#new">Créer une nouvelle salle</a>
-                      </span>
-                    </div>
-                  </div>
-                  
 	           </div> 
+	           <component :is="currentView">
+                <!-- component changes when vm.currentview changes! -->
+             </component>
 	           
 	          <footer id="content-footer">
                 <span class="footer-legal">© 2016 Quizz IT !</span>
