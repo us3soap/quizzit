@@ -28,7 +28,7 @@ build/Release
 node_modules
 
 # Bower dependency directory
-bower_components
+#bower_components
 
 # Temporary local files
 .sass-cache
