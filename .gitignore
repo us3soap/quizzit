@@ -35,5 +35,5 @@ bower_components
 .tmp
 
 # Distribution folder from build
-dist
+#dist
 .c9

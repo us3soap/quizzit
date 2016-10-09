@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="/styles/access.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	<div id="content" class="content" style="display:none">
+		
+		<div class="titrePage">
+			<p>{{ nomPage }}</p>
+		</div>
+		
+		<form class="scene">
+			
+			<div class="access-wrapper">
+                <div class="access-form">
+                    <h3>Saisissez la salle à rejoindre</h3>
+                    <input type="text" id="room" maxLength="4" autoComplete="off" autoFocus="true" v-model="room"  />
+                </div>
+            </div>
+			
+			<div class="action-bar">
+	    		<input type="button" type="button" class="btn btn-primary" v-on:click="go" value="Rejoindre" />
+			</div>
+			
+		</form>
+	</div>
+	
+    <script>
+        var GLOBAL = {
+            error: '<%= error %>',
+        };
+    </script>
+	
+	<script src="/bower_components/vue/dist/vue.min.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/js/access.js"></script>
+</body>
+</html>
