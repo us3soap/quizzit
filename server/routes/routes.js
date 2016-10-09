@@ -4,7 +4,6 @@ module.exports = function(router) {
     var qrcodeController = require('../controllers/qrcode');
     var adminController = require('../controllers/admin');
     var userController = require('../controllers/user');
-    var privateController = require('../controllers/private');
 
     /** Home page.
     **/
@@ -35,12 +34,4 @@ module.exports = function(router) {
     /** Access page
     **/
     router.get('/access', userController.askRoom);
-    
-    /** Page de paramétrage pour login. 
-    **/
-    router.get('/private/login', privateController.getLogin);
-    
-    /** Page de paramétrage pour créer une room spécifique. 
-    **/
-    router.get('/private/view', privateController.getView);
 };
