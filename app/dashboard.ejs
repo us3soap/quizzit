@@ -64,7 +64,9 @@
             <div class="scoring"  v-show="error === '' && state.step === 'result'">
                 Affichage des scores :
                 <div v-for="player in players">
-                    {{player.username}} -- {{player.points}} point(s)
+                    <div class="score">
+                        {{player.username}} -- {{player.points}} point(s)
+                    </div>
                 </div>
             </div>
             

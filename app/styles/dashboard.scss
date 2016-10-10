@@ -94,7 +94,7 @@ html, body{
 }
 
 .question{
-    flex-grow: 1;
+    height: 29%;
     display: flex;
     align-items: center;
     color: #fff;
@@ -245,4 +245,9 @@ html, body{
     font-size: 1.4em;
     display: inline-flex;
     vertical-align: middle;
+}
+
+.score{
+    padding: 18%;
+    font-size: 30px;
 }

@@ -116,10 +116,8 @@ var test = new Vue({
     methods: {
         /** 
          * Functions permettant de comptabiliser et recupérer les questions
-         * + création du chrono
          **/
         myGame: function() {
-            console.log('passage dans myGame');
             var that = this;
             
             if (this.cptQuestion == this.nbQuestions) {
