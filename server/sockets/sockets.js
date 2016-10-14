@@ -102,14 +102,15 @@ module.exports = function(io) {
     
         socket.on('recolte-reponse', function (data, fn) {
             
+            var nbPoint = questionnaire.getQuestionnaire(socket.room).checkResponse(data.id, data.reponse) ? 1 : 0;
             var _data = {
-                nbPoint : questionnaire.getQuestionnaire(socket.room).checkResponse(data.id, data.reponse) ? 1 : 0,
+                nbPoint : nbPoint,
                 usertoken : socket.token
             };
 
             socket.broadcast.emit('maj-party-users-'+socket.room, _data);
             
-            fn(true);
+            fn(nbPoint);
         });
     
         //demander l'affichage des boutons reload sur User.ejs
@@ -148,6 +149,12 @@ module.exports = function(io) {
                 });
             }
             
+        });
+        
+        
+        //socket de fin de temps imparti pour repondre.
+        socket.on('fin-temps-reponse', function () {
+            socket.broadcast.emit('fin-temps-reponse');
         });
     });
 };

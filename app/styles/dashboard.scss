@@ -160,10 +160,95 @@ html, body{
     align-items: center; 
 }
 
-.removed-transition {
+.removed {
     display: inline-block;
+    color: #fff;
 }
     
+.removed-leave {
+    -webkit-animation: disapear 1s;
+    -webkit-animation-fill-mode: backwards; 
+    animation: disapear 1s;
+    animation-fill-mode: backwards;
+    
+}
+
+@-webkit-keyframes disapear{
+    50% {
+        color:red;
+    }
+    100% {
+        color:red;
+    }    
+}
+
+@keyframes disapear{
+    50% {
+        color:red;
+    }
+    100% {
+        color:red;
+    }    
+}
+
+.removed-enter {
+    -webkit-animation: apear 1s;
+    -webkit-animation-fill-mode: backwards; 
+    animation: apear 1s;
+    animation-fill-mode: backwards;
+}
+
+@-webkit-keyframes apear{
+    10% {
+        color:red;
+    }
+    80% {
+        color:red;
+    }    
+}
+
+@keyframes apear{
+    10% {
+        color:red;
+    }
+    80% {
+        color:red;
+    }    
+}
+
+.reponse-square{
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    margin-right: 1em;
+    vertical-align: middle;
+}
+
+.square1{background-color: #69B854;}
+
+.square2{background-color: #6AC0E0;}
+
+.square3{background-color: #EBAD41;}
+
+.square4{background-color: #D1534C;}
+
+.reponse{
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 1.4em;
+    display: inline-flex;
+    vertical-align: middle;
+}
+
+.score{
+    padding: 18%;
+    font-size: 30px;
+    text-align:center;
+}
+
+.texteGris{
+    color:grey;
+}
+/*
 .removed-leave {
     -webkit-animation: disapear 1s;
     -webkit-animation-fill-mode: forwards; 
@@ -221,33 +306,4 @@ html, body{
         -webkit-transform: translateX(-5%);
         transform: translateX(-5%); 
     }    
-}
-
-.reponse-square{
-    width: 30px;
-    height: 30px;
-    display: inline-block;
-    margin-right: 1em;
-    vertical-align: middle;
-}
-
-.square1{background-color: #69B854;}
-
-.square2{background-color: #6AC0E0;}
-
-.square3{background-color: #EBAD41;}
-
-.square4{background-color: #D1534C;}
-
-.reponse{
-    color: #fff;
-    font-family: Verdana, Arial, sans-serif;
-    font-size: 1.4em;
-    display: inline-flex;
-    vertical-align: middle;
-}
-
-.score{
-    padding: 18%;
-    font-size: 30px;
-}
+}*/

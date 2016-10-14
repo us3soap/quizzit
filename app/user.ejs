@@ -21,7 +21,18 @@
                 <div class="login-form">
                     <h3>Quel est votre pseudo?</h3>
                     <input type="text" id="pseudo" maxLength="14" autoComplete="off" autoFocus="true" v-model="user.pseudo" />
+                    
+                    <h3>Quel est votre email?</h3>
+                    <input type="email" id="mail" v-model="user.mail" />
+                    
                     <button v-on:click="login">Commencer à jouer</button>
+                </div>
+                
+                <div class="login-form">
+                    <h3>Sinon Connectez vous avec :</h3>
+                    <button v-on:click="facebook">Facebook</button>
+                    <button v-on:click="twitter">Twitter</button>
+                    <button v-on:click="google">Google +</button>
                 </div>
             </div>
             
@@ -42,7 +53,7 @@
             </div>
             
             <div id="PartyStarted" class="pad-wrapper" v-show="error === '' && state.step === 'game'">
-                <div id="listeReponse" class="btn-wrapper" v-show="reponse.id === 0">
+                <div id="listeReponse" class="btn-wrapper" v-show="reponse.id === 0 && isTimeToReply">
                     <div class="btn" v-on:click="reply(1)">{{question.reponse1}}</div>
                     <div class="btn" v-on:click="reply(2)">{{question.reponse2}}</div>
                     <div class="btn" v-on:click="reply(3)">{{question.reponse3}}</div>
@@ -54,6 +65,13 @@
                         <h3 v-show="reponse.display">{{reponse.text}}</h3>
                     </div>
                 </div>
+                <div class="recap-wrapper" v-show="reponse.id === 0 && !isTimeToReply">
+                    Temps ecoulé.
+                </div>
+                <div class="divScore">
+                   {{user.pseudo}} : {{user.score}} point(s) !!
+                </div>
+                <div
             </div>
                 
         </div>

@@ -46,16 +46,16 @@
                     {{question.question}}
                 </div>
                 <div class="reponses">
-                    <div id="divreponse1" v-show="affichageReponse1" transition="removed">
+                    <div id="divreponse1" class="removed" v-bind:class="{ 'texteGris': !affichageReponse1 }">
                         <span class="reponse-square square1"></span><div class="reponse" id="reponse1">{{question.reponse1}}</div>
                     </div>
-                    <div id="divreponse2" v-show="affichageReponse2" transition="removed">
+                    <div id="divreponse2" class="removed" v-bind:class="{ 'texteGris': !affichageReponse2 }">
                         <span class="reponse-square square2"></span><div class="reponse" id="reponse2">{{question.reponse2}}</div>
                     </div>
-                    <div id="divreponse3" v-show="affichageReponse3" transition="removed">
+                    <div id="divreponse3" class="removed" v-bind:class="{ 'texteGris': !affichageReponse3 }">
                         <span class="reponse-square square3"></span><div class="reponse" id="reponse3">{{question.reponse3}}</div>
                     </div>
-                    <div id="divreponse4" v-show="affichageReponse4" transition="removed">
+                    <div id="divreponse4" class="removed" v-bind:class="{ 'texteGris': !affichageReponse4 }">
                         <span class="reponse-square square4"></span><div class="reponse" id="reponse4">{{question.reponse4}}</div>
                     </div>
                 </div>    
@@ -63,7 +63,7 @@
             
             <div class="scoring"  v-show="error === '' && state.step === 'result'">
                 Affichage des scores :
-                <div v-for="player in players">
+                <div v-for="player in players" style="width:60%;">
                     <div class="score">
                         {{player.username}} -- {{player.points}} point(s)
                     </div>

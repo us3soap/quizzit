@@ -526,7 +526,7 @@
             "type": "question",
             "reponse1": "Carnivore",
             "reponse2": "Anthropophage",
-            "reponse3": "Ominivore",
+            "reponse3": "Omnivore",
             "reponse4": "Mycophage",
             "good": "reponse3",
             "explication": "Une personne omnivore se nourrit indifféremment d'aliments divers."
