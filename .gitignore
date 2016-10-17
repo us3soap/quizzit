@@ -35,5 +35,4 @@ node_modules
 .tmp
 
 # Distribution folder from build
-#dist
 .c9
