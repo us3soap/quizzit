@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Quizzjs</title>
+        <link rel="stylesheet" href="./styles/dashboard.css">
+    </head>
+    <body>
+        <div class="content">
+            <div class="players">
+                <div class="canvas-wrapper">
+                    <div class="timelaps-wheel"></div>
+                    <canvas id="timelaps" width="100%" height="100%">mince, pas compatible avec cette écran ...</canvas>
+                </div>
+            </div>
+            <div class="instruction">
+                Scanne ce QR Code pour parametrer votre partie.
+            </div>
+            <div class="howto">
+                <div class="picture">
+                    <img src="images/hand-device.png">
+                </div>
+                <div class="qrcode">
+                    <img class="qrcode-img" src="/admin-room/<%=token%>" />
+                </div>
+            </div>
+            <div class="question-wrapper">
+                <div class="question">
+                    <div></div>
+                </div>
+                <div class="reponses">
+                    <div id="divreponse1" class="cacher">
+                        <span class="reponse-square square1"></span><div class="reponse" id="reponse1"></div>
+                    </div>
+                    <div id="divreponse2" class="cacher">
+                        <span class="reponse-square square2"></span><div class="reponse" id="reponse2"></div>
+                    </div>
+                    <div id="divreponse3" class="cacher">
+                        <span class="reponse-square square3"></span><div class="reponse" id="reponse3"></div>
+                    </div>
+                    <div id="divreponse4" class="cacher">
+                        <span class="reponse-square square4"></span><div class="reponse" id="reponse4"></div>
+                    </div>
+                </div>    
+            </div>
+            <div class="scoring"></div>
+        </div>
+        <script>
+            var GLOBAL = {
+                url: '<%= url %>',
+                token: '<%= token %>',
+                ready2play: <%= ready2play %>
+            };
+        </script>
+    </body>
+</html>
