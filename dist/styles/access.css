@@ -1,0 +1,73 @@
+* {
+  box-sizing: border-box;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+input, textarea {
+  -webkit-touch-callout: default !important;
+  -webkit-user-select: text !important;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+#content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #6699ff;
+}
+#content .titrePage {
+  color: white;
+  font-size: 16px;
+  border-bottom: 1px solid white;
+  padding-bottom: 10px;
+}
+#content .action-bar {
+  position: fixed;
+  width: 100%;
+  bottom: 0px;
+  margin: 15px 0;
+}
+#content .action-bar input {
+  font-size: 20px;
+  width: 80%;
+  border: none;
+  height: 50px;
+  margin-top: 20px;
+  background-color: #8BB600;
+  color: #fff;
+}
+#content .action-bar input:active {
+  opacity: .8;
+}
+#content h4 {
+  color: white;
+}
+#content .scene {
+  font-size: 25px;
+  /*perspective: 600px;*/
+}
+#content .scene .access-wrapper {
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: white;
+  font-size: 18px;
+}
+#content .scene .access-wrapper h3 {
+  text-align: center;
+}
+#content .scene .access-wrapper input[type='text'] {
+  width: 100%;
+  font-size: 20px;
+  padding: 10px;
+  text-align: center;
+}

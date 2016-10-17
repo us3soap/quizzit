@@ -38,6 +38,10 @@ const settablePathRE = /^[A-Za-z_$][\w$]*(\.[A-Za-z_$][\w$]*|\[[^\[\]]+\])*$/
 
 export function compileProps (el, propOptions, vm) {
   var props = []
+<<<<<<< HEAD
+=======
+  var propsData = vm.$options.propsData
+>>>>>>> 0fb031e1fcec6e23b724b00c1061b1c1a1c5f583
   var names = Object.keys(propOptions)
   var i = names.length
   var options, name, attr, value, path, parsed, prop
@@ -122,6 +126,12 @@ export function compileProps (el, propOptions, vm) {
     } else if ((value = getAttr(el, attr)) !== null) {
       // has literal binding!
       prop.raw = value
+<<<<<<< HEAD
+=======
+    } else if (propsData && ((value = propsData[name] || propsData[path]) !== null)) {
+      // has propsData
+      prop.raw = value
+>>>>>>> 0fb031e1fcec6e23b724b00c1061b1c1a1c5f583
     } else if (process.env.NODE_ENV !== 'production') {
       // check possible camelCase prop usage
       var lowerCaseName = path.toLowerCase()
@@ -141,7 +151,16 @@ export function compileProps (el, propOptions, vm) {
           'kebab-case for props in templates.',
           vm
         )
+<<<<<<< HEAD
       } else if (options.required) {
+=======
+      } else if (options.required && (
+        !propsData || (
+          !(name in propsData) &&
+          !(path in propsData)
+        )
+      )) {
+>>>>>>> 0fb031e1fcec6e23b724b00c1061b1c1a1c5f583
         // warn missing required
         warn('Missing required prop: ' + name, vm)
       }

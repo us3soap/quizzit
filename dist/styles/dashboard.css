@@ -24,7 +24,11 @@ html, body {
 .player {
   height: 105px;
   width: 140px;
+<<<<<<< HEAD
   background-image: url(../img/player.png);
+=======
+  background-image: url(../images/player.png);
+>>>>>>> 0fb031e1fcec6e23b724b00c1061b1c1a1c5f583
   background-repeat: no-repeat;
   background-position: top;
   position: relative;
@@ -98,7 +102,10 @@ html, body {
   width: 100%;
   height: 100%;
   align-items: center;
+<<<<<<< HEAD
   display: none;
+=======
+>>>>>>> 0fb031e1fcec6e23b724b00c1061b1c1a1c5f583
 }
 
 .question {
@@ -121,6 +128,7 @@ html, body {
   padding: 0 0 2em 2em;
 }
 
+<<<<<<< HEAD
 .scores {
   flex-grow: 2;
   flex-direction: column;
@@ -161,6 +169,8 @@ html, body {
   vertical-align: middle;
 }
 
+=======
+>>>>>>> 0fb031e1fcec6e23b724b00c1061b1c1a1c5f583
 .canvas-wrapper {
   width: 6em;
   height: 6em;
@@ -202,6 +212,7 @@ html, body {
   margin-right: -37px;
 }
 
+<<<<<<< HEAD
 /*
 .progress{
     height:20px;
@@ -261,12 +272,15 @@ progress::-webkit-progress-bar {
   background: transparent;
 }
 
+=======
+>>>>>>> 0fb031e1fcec6e23b724b00c1061b1c1a1c5f583
 .scoring {
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
   align-items: center;
+<<<<<<< HEAD
   display: none;
 }
 
@@ -275,6 +289,15 @@ progress::-webkit-progress-bar {
 }
 
 .removed {
+=======
+}
+
+.removed-transition {
+  display: inline-block;
+}
+
+.removed-leave {
+>>>>>>> 0fb031e1fcec6e23b724b00c1061b1c1a1c5f583
   -webkit-animation: disapear 1s;
   -webkit-animation-fill-mode: forwards;
   animation: disapear 1s;
@@ -288,7 +311,11 @@ progress::-webkit-progress-bar {
     transform: translateX(200%);
   }
 }
+<<<<<<< HEAD
 .adding {
+=======
+.removed-enter {
+>>>>>>> 0fb031e1fcec6e23b724b00c1061b1c1a1c5f583
   -webkit-animation: apear 1s;
   -webkit-animation-fill-mode: forwards;
   animation: apear 1s;
@@ -302,6 +329,7 @@ progress::-webkit-progress-bar {
     transform: translateX(-5%);
   }
 }
+<<<<<<< HEAD
 /*@font-face {
   font-family: 'Aldrich';
   font-style: normal;
@@ -476,4 +504,36 @@ progress::-webkit-progress-bar {
 }
 * {
   /*box-sizing: border-box;*/
+=======
+.reponse-square {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  margin-right: 1em;
+  vertical-align: middle;
+}
+
+.square1 {
+  background-color: #69B854;
+}
+
+.square2 {
+  background-color: #6AC0E0;
+}
+
+.square3 {
+  background-color: #EBAD41;
+}
+
+.square4 {
+  background-color: #D1534C;
+}
+
+.reponse {
+  color: #fff;
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 1.4em;
+  display: inline-flex;
+  vertical-align: middle;
+>>>>>>> 0fb031e1fcec6e23b724b00c1061b1c1a1c5f583
 }

@@ -68,7 +68,11 @@ export default function (Vue) {
 
     // fragment:
     // if this instance is compiled inside a Fragment, it
+<<<<<<< HEAD
     // needs to reigster itself as a child of that fragment
+=======
+    // needs to register itself as a child of that fragment
+>>>>>>> 0fb031e1fcec6e23b724b00c1061b1c1a1c5f583
     // for attach/detach to work properly.
     this._frag = options._frag
     if (this._frag) {

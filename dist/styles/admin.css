@@ -14,6 +14,7 @@ html, body {
   margin: 0;
   height: 100%;
   font-family: sans-serif;
+<<<<<<< HEAD
 }
 
 #user-view {
@@ -21,11 +22,18 @@ html, body {
 }
 
 .content {
+=======
+  text-align: center;
+}
+
+#content {
+>>>>>>> 0fb031e1fcec6e23b724b00c1061b1c1a1c5f583
   display: flex;
   flex-direction: column;
   height: 100%;
   background-color: #6699ff;
 }
+<<<<<<< HEAD
 
 h4 {
   color: white;
@@ -51,6 +59,21 @@ h4 {
 }
 
 .login-form button {
+=======
+#content .titrePage {
+  color: white;
+  font-size: 16px;
+  border-bottom: 1px solid white;
+  padding-bottom: 10px;
+}
+#content .action-bar {
+  position: fixed;
+  width: 100%;
+  bottom: 0px;
+  margin: 15px 0;
+}
+#content .action-bar button {
+>>>>>>> 0fb031e1fcec6e23b724b00c1061b1c1a1c5f583
   font-size: 20px;
   width: 80%;
   border: none;
@@ -59,6 +82,7 @@ h4 {
   background-color: #8BB600;
   color: #fff;
 }
+<<<<<<< HEAD
 
 .login-form button:active {
   opacity: .8;
@@ -118,4 +142,55 @@ h4 {
   align-items: center;
   justify-content: center;
   text-align: center;
+=======
+#content .action-bar button:active {
+  opacity: .8;
+}
+#content h4 {
+  color: white;
+}
+#content .scene {
+  font-size: 25px;
+  /*perspective: 600px;*/
+}
+#content .scene .flip, #content .scene .flip > div {
+  width: inherit;
+  height: inherit;
+  transition: transform 1s;
+}
+#content .scene .flip > div {
+  position: absolute;
+  backface-visibility: hidden;
+  width: 100%;
+}
+#content .scene .flip {
+  /*transform-style: preserve-3d;*/
+}
+#content .scene .flip table {
+  width: 100%;
+}
+#content .scene .flip table td {
+  width: 50%;
+}
+#content .scene .flip table td:active {
+  opacity: .8;
+}
+#content .scene .flip .avant {
+  transform: perspective(600px) rotateX(0deg);
+}
+#content .scene .flip .arriere {
+  transform: perspective(600px) rotateX(180deg);
+}
+#content .scene .flip .afficherVerso {
+  transform: perspective(600px) rotateX(180deg);
+}
+#content .scene .flip .afficherRecto {
+  transform: perspective(600px) rotateX(360deg);
+}
+#content .scene .flip select {
+  width: 90%;
+  padding: 15px 15px;
+  margin: 0px;
+  font-size: 24px;
+>>>>>>> 0fb031e1fcec6e23b724b00c1061b1c1a1c5f583
 }

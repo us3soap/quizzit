@@ -167,7 +167,11 @@ export function stripQuotes (str) {
 }
 
 /**
+<<<<<<< HEAD
  * Camelize a hyphen-delmited string.
+=======
+ * Camelize a hyphen-delimited string.
+>>>>>>> 0fb031e1fcec6e23b724b00c1061b1c1a1c5f583
  *
  * @param {String} str
  * @return {String}
@@ -189,10 +193,18 @@ function toUpper (_, c) {
  * @return {String}
  */
 
+<<<<<<< HEAD
 var hyphenateRE = /([a-z\d])([A-Z])/g
 export function hyphenate (str) {
   return str
     .replace(hyphenateRE, '$1-$2')
+=======
+var hyphenateRE = /([^-])([A-Z])/g
+export function hyphenate (str) {
+  return str
+    .replace(hyphenateRE, '$1-$2')
+    .replace(hyphenateRE, '$1-$2')
+>>>>>>> 0fb031e1fcec6e23b724b00c1061b1c1a1c5f583
     .toLowerCase()
 }
 

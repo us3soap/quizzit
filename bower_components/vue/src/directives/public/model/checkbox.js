@@ -31,6 +31,7 @@ export default {
     }
 
     this.listener = function () {
+<<<<<<< HEAD
       var model = self._watcher.value
       if (isArray(model)) {
         var val = self.getValue()
@@ -40,6 +41,18 @@ export default {
           }
         } else {
           model.$remove(val)
+=======
+      var model = self._watcher.get()
+      if (isArray(model)) {
+        var val = self.getValue()
+        var i = indexOf(model, val)
+        if (el.checked) {
+          if (i < 0) {
+            self.set(model.concat(val))
+          }
+        } else if (i > -1) {
+          self.set(model.slice(0, i).concat(model.slice(i + 1)))
+>>>>>>> 0fb031e1fcec6e23b724b00c1061b1c1a1c5f583
         }
       } else {
         self.set(getBooleanValue())

@@ -1,7 +1,9 @@
 {
-  "name": "quizz it!",
+  "name": "quizz-it!",
   "version": "0.0.1",
   "private": true,
+  "description": "Moteur quizzit",
+  "main": "index.js",
   "engines": {
     "node": ">=0.12.0"
   },

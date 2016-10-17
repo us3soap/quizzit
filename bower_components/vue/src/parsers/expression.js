@@ -23,7 +23,11 @@ const improperKeywordsRE =
 
 const wsRE = /\s/g
 const newlineRE = /\n/g
+<<<<<<< HEAD
 const saveRE = /[\{,]\s*[\w\$_]+\s*:|('(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*"|`(?:[^`\\]|\\.)*\$\{|\}(?:[^`\\]|\\.)*`|`(?:[^`\\]|\\.)*`)|new |typeof |void /g
+=======
+const saveRE = /[\{,]\s*[\w\$_]+\s*:|('(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*"|`(?:[^`\\]|\\.)*\$\{|\}(?:[^`\\"']|\\.)*`|`(?:[^`\\]|\\.)*`)|new |typeof |void /g
+>>>>>>> 0fb031e1fcec6e23b724b00c1061b1c1a1c5f583
 const restoreRE = /"(\d+)"/g
 const pathTestRE = /^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*|\['.*?'\]|\[".*?"\]|\[\d+\]|\[[A-Za-z_$][\w$]*\])*$/
 const identRE = /[^\w$\.](?:[A-Za-z_$][\w$]*)/g

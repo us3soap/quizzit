@@ -74,6 +74,12 @@ function transcludeTemplate (el, options) {
   var frag = parseTemplate(template, true)
   if (frag) {
     var replacer = frag.firstChild
+<<<<<<< HEAD
+=======
+    if (!replacer) {
+      return frag
+    }
+>>>>>>> 0fb031e1fcec6e23b724b00c1061b1c1a1c5f583
     var tag = replacer.tagName && replacer.tagName.toLowerCase()
     if (options.replace) {
       /* istanbul ignore if */
