@@ -28,10 +28,12 @@ build/Release
 node_modules
 
 # Bower dependency directory
+#bower_components
 
 # Temporary local files
 .sass-cache
 .tmp
 
 # Distribution folder from build
+#dist
 .c9
