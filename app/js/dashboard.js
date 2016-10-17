@@ -14,6 +14,7 @@ var test = new Vue({
         nbQuestions : '',
         pageQRCode :  '', //lien du QRcode (page admin-room ou room)
         timerQuestion : '',
+        affichageExplication : false,
         affichageScore : false,
         affichageReponse1 : true, //gestion de l'animation pour afficher la bonne reponse
         affichageReponse2 : true,
@@ -172,24 +173,30 @@ var test = new Vue({
                 this.affichageReponse2 =  false;
                 this.affichageReponse3 =  false;
                 this.affichageReponse4 =  false;
+                this.affichageExplication =  true;
             } else if (bonneReponse == "reponse2") {
                 this.affichageReponse1 =  false;
                 this.affichageReponse3 =  false;
                 this.affichageReponse4 =  false;
+                this.affichageExplication =  true;
             } else if (bonneReponse == "reponse3") {
                 this.affichageReponse2 =  false;
                 this.affichageReponse1 =  false;
                 this.affichageReponse4 =  false;
+                this.affichageExplication =  true;
             } else if (bonneReponse == "reponse4") {
                 this.affichageReponse2 =  false;
                 this.affichageReponse3 =  false;
                 this.affichageReponse1 =  false;
+                this.affichageExplication =  true;
             } else {
                 this.affichageReponse1 =  true;
                 this.affichageReponse2 =  true;
                 this.affichageReponse3 =  true;
                 this.affichageReponse4 =  true;
+                this.affichageExplication =  false;
             }
+            
         },
         
         gererTimer : function () {

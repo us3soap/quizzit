@@ -1,68 +1,5 @@
 <!doctype html>
 <html lang="en">
-<<<<<<< HEAD
-
-<head>
-    <title>QuizzJS</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/jquery-ui.css">
-    <link rel="stylesheet" href="/css/telephone.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-
-<body>
-	<div id="content" class="content">
-		<nav class="navbar navbar-default">
-		  <div class="container-fluid">
-		    <div class="navbar-header">
-		      <a class="navbar-brand" href="#">
-		        <p> {{ nomPage }} </p>
-		      </a>
-		    </div>
-		  </div>
-		</nav>
-		
-		<h4>Nombre d'utilisateurs</h4>
-		
-		<select id="nbUsersMax" class="form-control">
-			<option v-for="nbUsers in nbUsersMax">
-		  		{{ nbUsers.text }}
-		  	</option>
-		</select>
-		
-		<h4>Nombre de questions</h4>
-		
-		<select id="nbQuestions" class="form-control">
-			<option v-for="nbQuestions in nbQuestionsMax">
-		  		{{ nbQuestions.text }}
-		  	</option>
-		</select>
-		
-		<h4>Temps de réponse autorisé</h4>
-		
-		<select id="timerQuestion" class="form-control">
-			<option v-for="timerQuestion in timerQuestionMax">
-		  		{{ timerQuestion.text }}
-		  	</option>
-		</select>
-		
-		<div class="panel panel-default" style="margin-top:30px;">
-  			<div class="panel-body" style="text-align: center;">
-    			<button id="createRoom" type="button" class="btn btn-primary" v-on:click="createRoom">Créer le salon</button>
-  			</div>
-		</div>
-	
-	</div>
-    <script src="/js/vue.js"></script>
-    <script src="/js/jquery.min.js"></script>
-  	<script src="/js/jquery-ui.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/notify.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/admin.js"></script>
-    
-    <script>
-=======
 <head>
 	<link rel="stylesheet" href="/styles/admin.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -140,15 +77,12 @@
 	</div>
 
 	<script>
->>>>>>> 0fb031e1fcec6e23b724b00c1061b1c1a1c5f583
         var GLOBAL = {
             url : '<%= url %>',
             token : '<%= token %>',
             error : '<%= error %>'
         };
     </script>
-<<<<<<< HEAD
-=======
     
     <script src="/bower_components/vue/dist/vue.js"></script>
     <script src="/bower_components/jquery/dist/jquery.js"></script>
@@ -156,6 +90,5 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/admin.js"></script>
     
->>>>>>> 0fb031e1fcec6e23b724b00c1061b1c1a1c5f583
 </body>
 </html>

@@ -10,6 +10,7 @@ var test = new Vue({
         error : GLOBAL.error,
         players : [], //tableau des joueurs (token, username, points)
         nbUsersMax : '',
+        testColor:'green',
         nbQuestions : '',
         pageQRCode :  '', //lien du QRcode (page admin-room ou room)
         timerQuestion : '',
@@ -94,6 +95,8 @@ var test = new Vue({
                 clearInterval(that.interval);
                 
                 that.animationReponses(that.question.good);
+                //envoi au serveur fin du temps pour repondre à la question + cumul points sur les téléphones
+                socket.emit('fin-temps-reponse', function (data) {});
                 
                 //relance question dans 6 secondes (après le recap des scores)
                 if (that.cptQuestion < that.nbQuestions) {
@@ -116,10 +119,8 @@ var test = new Vue({
     methods: {
         /** 
          * Functions permettant de comptabiliser et recupérer les questions
-         * + création du chrono
          **/
         myGame: function() {
-            console.log('passage dans myGame');
             var that = this;
             
             if (this.cptQuestion == this.nbQuestions) {
@@ -238,6 +239,8 @@ var test = new Vue({
                     clearInterval(that.interval);
 
                     that.animationReponses(that.question.good);
+                    //envoi au serveur fin du temps pour repondre à la question + cumul points sur les téléphones
+                    socket.emit('fin-temps-reponse', function (data) {});
                 }
             }, tickInterval);
         },

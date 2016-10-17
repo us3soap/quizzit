@@ -14,52 +14,15 @@ html, body {
   margin: 0;
   height: 100%;
   font-family: sans-serif;
-<<<<<<< HEAD
-}
-
-#user-view {
-  height: 100%;
-}
-
-.content {
-=======
   text-align: center;
 }
 
 #content {
->>>>>>> 0fb031e1fcec6e23b724b00c1061b1c1a1c5f583
   display: flex;
   flex-direction: column;
   height: 100%;
   background-color: #6699ff;
 }
-<<<<<<< HEAD
-
-h4 {
-  color: white;
-}
-
-/* login form */
-.login-wrapper {
-  height: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.login-wrapper h3 {
-  text-align: center;
-}
-
-.login-form {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-items: center;
-}
-
-.login-form button {
-=======
 #content .titrePage {
   color: white;
   font-size: 16px;
@@ -73,7 +36,6 @@ h4 {
   margin: 15px 0;
 }
 #content .action-bar button {
->>>>>>> 0fb031e1fcec6e23b724b00c1061b1c1a1c5f583
   font-size: 20px;
   width: 80%;
   border: none;
@@ -82,67 +44,6 @@ h4 {
   background-color: #8BB600;
   color: #fff;
 }
-<<<<<<< HEAD
-
-.login-form button:active {
-  opacity: .8;
-}
-
-.login-form input[type='text'] {
-  width: 80%;
-  font-size: 20px;
-  padding: 10px;
-  text-align: center;
-}
-
-/* pad */
-.pad-wrapper {
-  height: 100%;
-}
-
-.btn-wrapper {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.btn-wrapper .btn {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  color: #FFF;
-  font-size: 18px;
-}
-
-.btn-wrapper .btn:active {
-  opacity: .8;
-}
-
-.btn-wrapper .btn:first-child {
-  background-color: #69B854;
-}
-
-.btn-wrapper .btn:nth-child(2) {
-  background-color: #6AC0E0;
-}
-
-.btn-wrapper .btn:nth-child(3) {
-  background-color: #EBAD41;
-}
-
-.btn-wrapper .btn:nth-child(4) {
-  background-color: #D1534C;
-}
-
-.recap-wrapper {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-=======
 #content .action-bar button:active {
   opacity: .8;
 }
@@ -192,5 +93,4 @@ h4 {
   padding: 15px 15px;
   margin: 0px;
   font-size: 24px;
->>>>>>> 0fb031e1fcec6e23b724b00c1061b1c1a1c5f583
 }

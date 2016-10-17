@@ -58,7 +58,10 @@
                     <div id="divreponse4" class="removed" v-bind:class="{ 'texteGris': !affichageReponse4 }">
                         <span class="reponse-square square4"></span><div class="reponse" id="reponse4">{{question.reponse4}}</div>
                     </div>
-                </div>    
+                </div>
+                <div class="explication" v-show="error === '' && affichageExplication">
+                    {{question.explication}}
+                </div>
             </div>
             
             <div class="scoring"  v-show="error === '' && state.step === 'result'">

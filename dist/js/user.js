@@ -9,6 +9,7 @@ new Vue({
     data: {
         nomPage : 'Quizz IT !',
         loading : false,
+        isTimeToReply : true,
         error : GLOBAL.error,
         room : GLOBAL.token,
         state: {
@@ -18,6 +19,8 @@ new Vue({
         user: {
           token : '',
           pseudo: '',
+          mail:'',
+          score: 0,
           debug : ''
         },
         reponse : {
@@ -47,12 +50,19 @@ new Vue({
             that.question = data;
             that.state.step = 'game';
             that.reponse = _reponse;
-            
+            that.isTimeToReply = true;
+            that.nbPointAAjouter = 0;
         });
         
         socket.on('reload-party-' + this.room, function (data) {
             console.log('reload-party', data);
             that.state.step = 'reload';
+        });
+        
+        socket.on('fin-temps-reponse', function (data) {
+            console.log('fin-temps-reponse');
+            that.isTimeToReply = false;
+            that.user.score = that.user.score + that.nbPointAAjouter;
         });
         
     },
@@ -79,9 +89,11 @@ new Vue({
                 reponse: 'reponse' + this.reponse.id,
                 id: this.question.idquestion
             };
-
-            socket.emit('recolte-reponse', _data, function (dataRetour) {
-                console.log(dataRetour);
+            
+            var that = this;
+            
+            socket.emit('recolte-reponse', _data, function (data) {
+                that.nbPointAAjouter = data;
             });
         },
         display: function () {
