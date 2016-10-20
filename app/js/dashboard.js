@@ -206,26 +206,27 @@ var test = new Vue({
          **/
         animationReponses : function (bonneReponse){
             
-            if (bonneReponse == "reponse1") {
+            if(bonneReponse){
+                this.affichageReponse1 =  false;
                 this.affichageReponse2 =  false;
                 this.affichageReponse3 =  false;
                 this.affichageReponse4 =  false;
                 this.affichageExplication =  true;
-            } else if (bonneReponse == "reponse2") {
-                this.affichageReponse1 =  false;
-                this.affichageReponse3 =  false;
-                this.affichageReponse4 =  false;
-                this.affichageExplication =  true;
-            } else if (bonneReponse == "reponse3") {
-                this.affichageReponse2 =  false;
-                this.affichageReponse1 =  false;
-                this.affichageReponse4 =  false;
-                this.affichageExplication =  true;
-            } else if (bonneReponse == "reponse4") {
-                this.affichageReponse2 =  false;
-                this.affichageReponse3 =  false;
-                this.affichageReponse1 =  false;
-                this.affichageExplication =  true;
+                
+                switch (bonneReponse) {
+                    case "reponse1":
+                        this.affichageReponse1 =  true;
+                        break;
+                    case "reponse2":
+                        this.affichageReponse2 =  true;
+                        break;
+                    case "reponse3":
+                        this.affichageReponse3 =  true;
+                        break;
+                    case "reponse4":
+                        this.affichageReponse4 =  true;
+                        break;    
+                }
             } else {
                 this.affichageReponse1 =  true;
                 this.affichageReponse2 =  true;
@@ -233,7 +234,6 @@ var test = new Vue({
                 this.affichageReponse4 =  true;
                 this.affichageExplication =  false;
             }
-            
         },
         
         gererTimer : function () {
