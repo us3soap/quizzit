@@ -10,18 +10,23 @@ var test = new Vue({
         error : GLOBAL.error,
         players : [], //tableau des joueurs (token, username, points)
         nbUsersMax : '',
-        testColor:'green',
+        nbUsersConnectes : 0,
         nbQuestions : '',
         pageQRCode :  '', //lien du QRcode (page admin-room ou room)
         timerQuestion : '',
+        timerDebutPartie : 30,
+        affichageExplication : false,
+        affichageInfos : true,
+        infos : '',
         affichageScore : false,
         affichageReponse1 : true, //gestion de l'animation pour afficher la bonne reponse
-        affichageReponse2 : true,
-        affichageReponse3 : true,
-        affichageReponse4 : true,
+        affichageReponse2 : true, //gestion de l'animation pour afficher la bonne reponse
+        affichageReponse3 : true, //gestion de l'animation pour afficher la bonne reponse
+        affichageReponse4 : true, //gestion de l'animation pour afficher la bonne reponse
         tempsDeTransition : 8000, //temps entre affichage de la réponse et debut de la question suivante
         instructions : '', //Instructions afficher sur la page dashboard
         eventQuestion : '',
+        eventTimerAvantDebutPartie : '',
         state: {
             loading : false,
             step : '' //waitParam, waitPlayer, waitGame, game, result
@@ -41,6 +46,7 @@ var test = new Vue({
         
         //socket ajout d'un joueur dans le salon
         socket.on('new-user-' + GLOBAL.token, function(data) {
+            that.nbUsersConnectes = that.nbUsersConnectes + 1;
             that.players.push({token:data['usertoken'], username:data['user'],points:0}); //ajout d'un player
             that.players.splice(0,1);   //suppression d'un joueur "attente"
         }),
@@ -56,6 +62,36 @@ var test = new Vue({
             }
             that.pageQRCode = 'access-room';
             that.instructions = 'Scanne ce QR Code pour rejoindre la partie.';
+            that.infos = 'Demarrage de la partie dans ' + that.timerDebutPartie + ' secondes';
+            that.eventTimerAvantDebutPartie = setInterval(function () {
+                if (that.timerDebutPartie == 0 ) {
+                    clearInterval(that.eventTimerAvantDebutPartie);
+                    that.affichageInfos = false;
+                    that.players.splice(0,(that.nbUsersMax - that.nbUsersConnectes));
+                    that.nbUsersMax = that.nbUsersConnectes;
+                    
+                    
+                    that.state.step = 'waitPlay';
+                    that.instructions = 'Tout le monde est la. Préparez vous !';
+                    
+                    setTimeout (function(){
+                        socket.emit('start', {room : GLOBAL.token}, function (data) {
+                            console.log("Démarrage partie");
+                            that.cptQuestion = 0;
+                            
+                            //ici, une question durera xx secondes, paramétré par l'utilisateur, 10 secondes par défaut.
+                            that.lancerIntervalQuestion();
+                            //Je lance ma fonction en même temps que l'event
+                            //car la première itération de mon event se fait au bon de 10 sec.
+                            that.myGame();
+                        });
+                    }, 5000);
+                } else {
+                    that.timerDebutPartie = that.timerDebutPartie -1;
+                    that.infos = 'Demarrage de la partie dans ' + that.timerDebutPartie + ' secondes';
+                }
+            }, 1000 );
+            
         }),
         
         //socket lancement d'un partie nombre de joueur suffisant
@@ -63,6 +99,8 @@ var test = new Vue({
             
             that.state.step = 'waitPlay';
             that.instructions = 'Tout le monde est la. Préparez vous !';
+            clearInterval(that.eventTimerAvantDebutPartie);
+            that.affichageInfos = false;
             
             setTimeout (function(){
                 socket.emit('start', {room : GLOBAL.token}, function (data) {
@@ -168,27 +206,33 @@ var test = new Vue({
          **/
         animationReponses : function (bonneReponse){
             
-            if (bonneReponse == "reponse1") {
+            if(bonneReponse){
+                this.affichageReponse1 =  false;
                 this.affichageReponse2 =  false;
                 this.affichageReponse3 =  false;
                 this.affichageReponse4 =  false;
-            } else if (bonneReponse == "reponse2") {
-                this.affichageReponse1 =  false;
-                this.affichageReponse3 =  false;
-                this.affichageReponse4 =  false;
-            } else if (bonneReponse == "reponse3") {
-                this.affichageReponse2 =  false;
-                this.affichageReponse1 =  false;
-                this.affichageReponse4 =  false;
-            } else if (bonneReponse == "reponse4") {
-                this.affichageReponse2 =  false;
-                this.affichageReponse3 =  false;
-                this.affichageReponse1 =  false;
+                this.affichageExplication =  true;
+                
+                switch (bonneReponse) {
+                    case "reponse1":
+                        this.affichageReponse1 =  true;
+                        break;
+                    case "reponse2":
+                        this.affichageReponse2 =  true;
+                        break;
+                    case "reponse3":
+                        this.affichageReponse3 =  true;
+                        break;
+                    case "reponse4":
+                        this.affichageReponse4 =  true;
+                        break;    
+                }
             } else {
                 this.affichageReponse1 =  true;
                 this.affichageReponse2 =  true;
                 this.affichageReponse3 =  true;
                 this.affichageReponse4 =  true;
+                this.affichageExplication =  false;
             }
         },
         
