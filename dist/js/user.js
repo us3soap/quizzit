@@ -59,7 +59,7 @@ new Vue({
             that.state.step = 'reload';
         });
         
-        socket.on('fin-temps-reponse', function (data) {
+        socket.on('fin-temps-reponse', function () {
             console.log('fin-temps-reponse');
             that.isTimeToReply = false;
             that.user.score = that.user.score + that.nbPointAAjouter;

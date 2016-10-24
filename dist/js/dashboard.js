@@ -16,7 +16,7 @@ var test = new Vue({
         timerQuestion : '',
         timerDebutPartie : 30,
         affichageExplication : false,
-        affichageInfos : true,
+        affichageInfos : false,
         infos : '',
         affichageScore : false,
         affichageReponse1 : true, //gestion de l'animation pour afficher la bonne reponse
@@ -47,7 +47,7 @@ var test = new Vue({
         //socket ajout d'un joueur dans le salon
         socket.on('new-user-' + GLOBAL.token, function(data) {
             that.nbUsersConnectes = that.nbUsersConnectes + 1;
-            that.players.push({token:data['usertoken'], username:data['user'],points:0}); //ajout d'un player
+            that.players.push({token:data.usertoken, username:data.user,points:0}); //ajout d'un player
             that.players.splice(0,1);   //suppression d'un joueur "attente"
         }),
         
@@ -64,7 +64,7 @@ var test = new Vue({
             that.instructions = 'Scanne ce QR Code pour rejoindre la partie.';
             that.infos = 'Demarrage de la partie dans ' + that.timerDebutPartie + ' secondes';
             that.eventTimerAvantDebutPartie = setInterval(function () {
-                if (that.timerDebutPartie == 0 ) {
+                if (that.timerDebutPartie === 0 ) {
                     clearInterval(that.eventTimerAvantDebutPartie);
                     that.affichageInfos = false;
                     that.players.splice(0,(that.nbUsersMax - that.nbUsersConnectes));
@@ -75,8 +75,8 @@ var test = new Vue({
                     that.instructions = 'Tout le monde est la. Préparez vous !';
                     
                     setTimeout (function(){
-                        socket.emit('start', {room : GLOBAL.token}, function (data) {
-                            console.log("Démarrage partie");
+                        socket.emit('start', {room : GLOBAL.token}, function () {
+                            console.log('Démarrage partie');
                             that.cptQuestion = 0;
                             
                             //ici, une question durera xx secondes, paramétré par l'utilisateur, 10 secondes par défaut.
@@ -95,7 +95,7 @@ var test = new Vue({
         }),
         
         //socket lancement d'un partie nombre de joueur suffisant
-        socket.on('start-party-room-' + GLOBAL.token, function(user) {
+        socket.on('start-party-room-' + GLOBAL.token, function() {
             
             that.state.step = 'waitPlay';
             that.instructions = 'Tout le monde est la. Préparez vous !';
@@ -103,8 +103,8 @@ var test = new Vue({
             that.affichageInfos = false;
             
             setTimeout (function(){
-                socket.emit('start', {room : GLOBAL.token}, function (data) {
-                    console.log("Démarrage partie");
+                socket.emit('start', {room : GLOBAL.token}, function () {
+                    console.log('Démarrage partie');
                     that.cptQuestion = 0;
                     
                     //ici, une question durera xx secondes, paramétré par l'utilisateur, 10 secondes par défaut.
@@ -119,8 +119,8 @@ var test = new Vue({
         //socket mise a jour score après reponse d'un utilisateur
         socket.on('maj-party-users-' + GLOBAL.token, function(data) {
             for (var i = 0; i < that.nbUsersMax ; i++) {
-                if (that.players[i].token == data['usertoken']) {
-                    that.players[i].points = that.players[i].points + parseInt(data['nbPoint']);
+                if (that.players[i].token === data.usertoken) {
+                    that.players[i].points = that.players[i].points + parseInt(data.nbPoint);
                 }
             }
             
@@ -128,13 +128,13 @@ var test = new Vue({
             
             that.nbReponseRecu++;
             //si tout le monde a repondu alors transition et on passe à la question suivante.
-            if (that.nbUsersMax==that.nbReponseRecu) {
+            if (that.nbUsersMax === that.nbReponseRecu) {
                 that.arreterIntervalQuestion();
                 clearInterval(that.interval);
                 
                 that.animationReponses(that.question.good);
                 //envoi au serveur fin du temps pour repondre à la question + cumul points sur les téléphones
-                socket.emit('fin-temps-reponse', function (data) {});
+                socket.emit('fin-temps-reponse', function () {});
                 
                 //relance question dans 6 secondes (après le recap des scores)
                 if (that.cptQuestion < that.nbQuestions) {
@@ -146,7 +146,7 @@ var test = new Vue({
                     setTimeout (function(){
                         that.state.step = 'result';
                         setTimeout (function(){
-                            socket.emit('display-reload-party', {room : GLOBAL.token}, function (data) {});
+                            socket.emit('display-reload-party', {room : GLOBAL.token}, function () {});
                         },3000);
                     },that.tempsDeTransition);
                     
@@ -161,14 +161,14 @@ var test = new Vue({
         myGame: function() {
             var that = this;
             
-            if (this.cptQuestion == this.nbQuestions) {
+            if (this.cptQuestion === this.nbQuestions) {
                 this.arreterIntervalQuestion();
                 this.state.step = 'result';
                 
                 setTimeout (function(){
-                    socket.emit('display-reload-party', {room : GLOBAL.token}, function (data) {});
+                    socket.emit('display-reload-party', {room : GLOBAL.token}, function () {});
                 },3000);
-            } else if (this.cptQuestion % 5 == 0 && this.affichageScore) {
+            } else if (this.cptQuestion % 5 === 0 && this.affichageScore) {
                 this.arreterIntervalQuestion();
                 this.affichageScore = false;
                 this.state.step = 'result';
@@ -214,16 +214,16 @@ var test = new Vue({
                 this.affichageExplication =  true;
                 
                 switch (bonneReponse) {
-                    case "reponse1":
+                    case 'reponse1':
                         this.affichageReponse1 =  true;
                         break;
-                    case "reponse2":
+                    case 'reponse2':
                         this.affichageReponse2 =  true;
                         break;
-                    case "reponse3":
+                    case 'reponse3':
                         this.affichageReponse3 =  true;
                         break;
-                    case "reponse4":
+                    case 'reponse4':
                         this.affichageReponse4 =  true;
                         break;    
                 }
@@ -240,11 +240,10 @@ var test = new Vue({
             // gestion du timer
             var $timelapsWrapper = document.querySelector('.canvas-wrapper'),
                 $timelaps = document.querySelector('#timelaps'),
-                timelapsCtx = $timelaps.getContext("2d");
+                timelapsCtx = $timelaps.getContext('2d');
         
             var timelapsH = $timelapsWrapper.offsetHeight,
-                timelapsW = $timelapsWrapper.offsetWidth,
-                timelapsCenter = timelapsW / 2;
+                timelapsW = $timelapsWrapper.offsetWidth;
 
             var r = timelapsW/2,
                 x = 0,
@@ -257,7 +256,7 @@ var test = new Vue({
             var tick = 0;
             var nextStep = 0;
             
-            timelapsCtx.strokeStyle = "rgb(106, 150, 241)";
+            timelapsCtx.strokeStyle = 'rgb(106, 150, 241)';
             timelapsCtx.lineWidth = 1;
             timelapsCtx.beginPath();
             angle = -90;
@@ -284,7 +283,7 @@ var test = new Vue({
 
                     that.animationReponses(that.question.good);
                     //envoi au serveur fin du temps pour repondre à la question + cumul points sur les téléphones
-                    socket.emit('fin-temps-reponse', function (data) {});
+                    socket.emit('fin-temps-reponse', function () {});
                 }
             }, tickInterval);
         },
