@@ -16,7 +16,7 @@ var test = new Vue({
         timerQuestion : '',
         timerDebutPartie : 30,
         affichageExplication : false,
-        affichageInfos : true,
+        affichageInfos : false,
         infos : '',
         affichageScore : false,
         affichageReponse1 : true, //gestion de l'animation pour afficher la bonne reponse
